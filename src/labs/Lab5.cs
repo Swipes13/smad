@@ -53,10 +53,10 @@ namespace smad5.src.labs {
 
       for (int i = 0; i < n; i++) {
         double[] point = new double[]{
-          math.Distribution.Flat(0.0,x1),math.Distribution.Flat(0.0,x2),
-          math.Distribution.Flat(0.0,x3),math.Distribution.Flat(0.0,x4),
-          math.Distribution.Flat(0.0,x5),math.Distribution.Flat(0.0,x6),
-          math.Distribution.Flat(0.0,x7),
+          math.Distribution.Flat(-x1,x1*2.0),math.Distribution.Flat(-x2,x2*2.0),
+          math.Distribution.Flat(-x3,x3*2.0),math.Distribution.Flat(-x4,x4*2.0),
+          math.Distribution.Flat(-x5,x5*2.0),math.Distribution.Flat(-x6,x6*2.0),
+          math.Distribution.Flat(-x7,x7*2.0),
         };
         points.Add(point);
         double[] f = calcF(point);
@@ -76,10 +76,12 @@ namespace smad5.src.labs {
       text += Environment.NewLine + "2. Calculating multi-conjugation effect data" + Environment.NewLine;
       Matrix XT = X.Transpose();
       Matrix XTX = XT * X;
+      double detXTX = XTX.Determinant();
+      text += "det(XTX) = \t" + detXTX.ToString() + Environment.NewLine;
 
       Matrix XTX_Trace = XTX / XTX.Trace();
-      double det = XTX_Trace.Determinant();
-      text += "det(XTX/trace) = \t" + det.ToString() + Environment.NewLine;
+      double detXTX_Trace = XTX_Trace.Determinant();
+      text += "det(XTX/trace) = \t" + detXTX_Trace.ToString() + Environment.NewLine;
 
       double maxL = XTX.MaxEiganValue(); // or XTX_Trace??
       double minL = XTX.MinEiganValue();
@@ -198,7 +200,7 @@ namespace smad5.src.labs {
       var eiganVals = X_centerTX_center.EiganValues();
       text += "eiganValues:" + Environment.NewLine;
       
-
+      /*
       Matrix nulMat =  new Matrix(m,1);
       List<Matrix> eiVecs = new List<Matrix>();
       for (int i = 0; i < eiganVals.Count(); i++) {
@@ -225,7 +227,7 @@ namespace smad5.src.labs {
           Zr[i, j] = Z_[i, j];
 
       Matrix bb = (Zr.Transpose() * Zr).Inverse() * Zr.Transpose() * Y_center;
-      Matrix tettaCenter = Vr * bb;
+      Matrix tettaCenter = Vr * bb;*/
       return text;
     }
   }
