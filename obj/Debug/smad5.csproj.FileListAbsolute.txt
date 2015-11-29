@@ -1,0 +1,10 @@
+C:\Prog\smad5\bin\Debug\smad5.exe.config
+C:\Prog\smad5\bin\Debug\smad5.exe
+C:\Prog\smad5\bin\Debug\smad5.pdb
+C:\Prog\smad5\bin\Debug\GuiExtension.dll
+C:\Prog\smad5\obj\Debug\smad5.csprojResolveAssemblyReference.cache
+C:\Prog\smad5\obj\Debug\smad5.Properties.Resources.resources
+C:\Prog\smad5\obj\Debug\smad5.csproj.GenerateResource.Cache
+C:\Prog\smad5\obj\Debug\smad5.exe
+C:\Prog\smad5\obj\Debug\smad5.pdb
+C:\Prog\smad5\obj\Debug\smad5.Form1.resources

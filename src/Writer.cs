@@ -1,11 +1,11 @@
 ﻿using System;
-using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
-namespace smad1.src {
+namespace smad5.src {
   public class Writer : IDisposable {
     StreamWriter _streamWriter = null;
     static Writer writer = null;
@@ -17,8 +17,8 @@ namespace smad1.src {
       if (writer == null) writer = new Writer("out.txt");
       return writer;
     }
-    public static Writer Open(string filename){
-      if(writer == null) writer = new Writer(filename);
+    public static Writer Open(string filename) {
+      if (writer == null) writer = new Writer(filename);
       return writer;
     }
     public void Write(String st) {
@@ -38,7 +38,7 @@ namespace smad1.src {
     }
     private void close() {
       if (_streamWriter != null) {
-        _streamWriter.Close(); _streamWriter = null; 
+        _streamWriter.Close(); _streamWriter = null;
       };
     }
     public void Dispose() {

@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Collections;
 
-namespace smad1.src {
-  public class Matrix {
-
+namespace smad5.src.math {
+  class MatrixQ {
+      
     /// <summary>
     /// Contains the rows of the matrix as elements, which
     /// are ArrayLists as well.
@@ -41,7 +43,7 @@ namespace smad1.src {
     /// <summary>
     /// Inits empty matrix 
     /// </summary>
-    public Matrix() {
+    public MatrixQ() {
       Values = new ArrayList();
       rowCount = 0;
       columnCount = 0;
@@ -52,7 +54,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="m">Number of rows</param>
     /// <param name="n">Number of columns</param>
-    public Matrix(int m, int n) {
+    public MatrixQ(int m, int n) {
       rowCount = m;
       columnCount = n;
 
@@ -71,7 +73,7 @@ namespace smad1.src {
     /// Inits square matrix
     /// </summary>
     /// <param name="n"></param>
-    public Matrix(int n) {
+    public MatrixQ(int n) {
       rowCount = n;
       columnCount = n;
 
@@ -90,7 +92,7 @@ namespace smad1.src {
     /// Creates one by one matrix containing x
     /// </summary>
     /// <param name="x"></param>
-    public Matrix(Complex x) {
+    public MatrixQ(Complex x) {
       rowCount = 1;
       columnCount = 1;
 
@@ -105,7 +107,7 @@ namespace smad1.src {
     /// Creates matrix from 2-d Complex array.
     /// </summary>
     /// <param name="values"></param>
-    public Matrix(Complex[,] values) {
+    public MatrixQ(Complex[,] values) {
       if (values == null) {
         Values = new ArrayList();
         columnCount = 0;
@@ -130,7 +132,7 @@ namespace smad1.src {
     /// Creates column vector from Complex array.
     /// </summary>
     /// <param name="values"></param>
-    public Matrix(Complex[] values) {
+    public MatrixQ(Complex[] values) {
       if (values == null) {
         Values = new ArrayList();
         columnCount = 0;
@@ -153,7 +155,7 @@ namespace smad1.src {
     /// Creates one by one matrix containing x
     /// </summary>
     /// <param name="x"></param>
-    public Matrix(double x) {
+    public MatrixQ(double x) {
       rowCount = 1;
       columnCount = 1;
 
@@ -168,7 +170,7 @@ namespace smad1.src {
     /// Creates matrix from 2-d double array.
     /// </summary>
     /// <param name="values"></param>
-    public Matrix(double[,] values) {
+    public MatrixQ(double[,] values) {
       if (values == null) {
         Values = new ArrayList();
         columnCount = 0;
@@ -193,7 +195,7 @@ namespace smad1.src {
     /// Creates column vector from double array.
     /// </summary>
     /// <param name="values"></param>
-    public Matrix(double[] values) {
+    public MatrixQ(double[] values) {
       if (values == null) {
         Values = new ArrayList();
         columnCount = 0;
@@ -217,7 +219,7 @@ namespace smad1.src {
     /// Not fast, but easy to use, if matrices are to be entered by hand or read from text files.
     /// </summary>
     /// <param name="matrix">Matrix coded as string. Lines are separated by a semicolon, column elements by a comma.</param>
-    public Matrix(string matrix_string) {
+    public MatrixQ(string matrix_string) {
       // remove spaces
       matrix_string = matrix_string.Replace(" ", "");
 
@@ -257,8 +259,8 @@ namespace smad1.src {
     /// <param name="n">Dimension of the basis.</param>
     /// <param name="j">Index of canonical basis vector to be retrieved.</param>
     /// <returns></returns>
-    public static Matrix E(int n, int j) {
-      Matrix e = Zeros(n, 1);
+    public static MatrixQ E(int n, int j) {
+      MatrixQ e = Zeros(n, 1);
       e[j] = Complex.One;
 
       return e;
@@ -282,8 +284,8 @@ namespace smad1.src {
     /// <param name="n">Number of columns.</param>
     /// <param name="even">Indicates, if matrix entry (1,1) equals zero.</param>
     /// <returns></returns>
-    public static Matrix ChessboardMatrix(int m, int n, bool even) {
-      Matrix M = new Matrix(m, n);
+    public static MatrixQ ChessboardMatrix(int m, int n, bool even) {
+      MatrixQ M = new MatrixQ(m, n);
 
       if (even)
         for (int i = 1; i <= m; i++)
@@ -304,8 +306,8 @@ namespace smad1.src {
     /// <param name="n">Number of columns.</param>
     /// <param name="even">Indicates, if matrix entry (1,1) equals zero.</param>
     /// <returns></returns>
-    public static Matrix ChessboardMatrix(int n, bool even) {
-      Matrix M = new Matrix(n);
+    public static MatrixQ ChessboardMatrix(int n, bool even) {
+      MatrixQ M = new MatrixQ(n);
 
       if (even)
         for (int i = 1; i <= n; i++)
@@ -325,8 +327,8 @@ namespace smad1.src {
     /// <param name="m">Number of rows.</param>
     /// <param name="n">Number of columns.</param>
     /// <returns>m by n matrix filled with zeros.</returns>
-    public static Matrix Zeros(int m, int n) {
-      return new Matrix(m, n);
+    public static MatrixQ Zeros(int m, int n) {
+      return new MatrixQ(m, n);
     }
 
     /// <summary>
@@ -334,8 +336,8 @@ namespace smad1.src {
     /// </summary>       
     /// <param name="n">Number of rows and columns, resp.</param>
     /// <returns>n by n matrix filled with zeros.</returns>
-    public static Matrix Zeros(int n) {
-      return new Matrix(n);
+    public static MatrixQ Zeros(int n) {
+      return new MatrixQ(n);
     }
 
     /// <summary>
@@ -344,8 +346,8 @@ namespace smad1.src {
     /// <param name="m">Number of rows.</param>
     /// <param name="n">Number of columns.</param>
     /// <returns>m by n matrix filled with ones.</returns>        
-    public static Matrix Ones(int m, int n) {
-      Matrix M = new Matrix(m, n);
+    public static MatrixQ Ones(int m, int n) {
+      MatrixQ M = new MatrixQ(m, n);
 
       for (int i = 0; i < m; i++) {
         for (int j = 0; j < n; j++) {
@@ -361,8 +363,8 @@ namespace smad1.src {
     /// </summary>        
     /// <param name="n">Number of columns.</param>
     /// <returns>n by n matrix filled with ones.</returns>        
-    public static Matrix Ones(int n) {
-      Matrix M = new Matrix(n);
+    public static MatrixQ Ones(int n) {
+      MatrixQ M = new MatrixQ(n);
 
       for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -378,7 +380,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="n">Number of rows and columns respectively.</param>
     /// <returns>n by n identity matrix.</returns>
-    public static Matrix Identity(int n) {
+    public static MatrixQ Identity(int n) {
       return Diag(Ones(n, 1));
     }
 
@@ -387,7 +389,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="n">Number of rows and columns, resp.</param>
     /// <returns></returns>
-    public static Matrix Eye(int n) {
+    public static MatrixQ Eye(int n) {
       return Identity(n);
     }
 
@@ -397,9 +399,9 @@ namespace smad1.src {
     /// <param name="A"></param>
     /// <param name="B"></param>
     /// <returns>Matrix [A|B]</returns>
-    public static Matrix VerticalConcat(Matrix A, Matrix B) {
+    public static MatrixQ VerticalConcat(MatrixQ A, MatrixQ B) {
 
-      Matrix C = A.Column(1);
+      MatrixQ C = A.Column(1);
 
       for (int j = 2; j <= A.ColumnCount; j++) {
         C.InsertColumn(A.Column(j), j);
@@ -413,13 +415,13 @@ namespace smad1.src {
       return C;
     }
 
-    public static Matrix VerticalConcat(Matrix[] A) {
+    public static MatrixQ VerticalConcat(MatrixQ[] A) {
       if (A == null)
         throw new ArgumentNullException();
       else if (A.Length == 1)
         return A[0];
       else {
-        Matrix C = VerticalConcat(A[0], A[1]);
+        MatrixQ C = VerticalConcat(A[0], A[1]);
 
         for (int i = 2; i < A.Length; i++) {
           C = VerticalConcat(C, A[i]);
@@ -429,8 +431,8 @@ namespace smad1.src {
       }
     }
 
-    public static Matrix HorizontalConcat(Matrix A, Matrix B) {
-      Matrix C = A.Row(1);
+    public static MatrixQ HorizontalConcat(MatrixQ A, MatrixQ B) {
+      MatrixQ C = A.Row(1);
 
 
       for (int i = 2; i <= A.RowCount; i++) {
@@ -445,13 +447,13 @@ namespace smad1.src {
       return C;
     }
 
-    public static Matrix HorizontalConcat(Matrix[] A) {
+    public static MatrixQ HorizontalConcat(MatrixQ[] A) {
       if (A == null)
         throw new ArgumentNullException();
       else if (A.Length == 1)
         return A[0];
       else {
-        Matrix C = HorizontalConcat(A[0], A[1]);
+        MatrixQ C = HorizontalConcat(A[0], A[1]);
 
         for (int i = 2; i < A.Length; i++) {
           C = HorizontalConcat(C, A[i]);
@@ -467,13 +469,13 @@ namespace smad1.src {
     /// </summary>
     /// <param name="diag_vector">column vector containing the diag elements</param>
     /// <returns></returns>
-    public static Matrix Diag(Matrix diag_vector) {
+    public static MatrixQ Diag(MatrixQ diag_vector) {
       int dim = diag_vector.VectorLength();
 
       if (dim == 0)
         throw new ArgumentException("diag_vector must be 1xN or Nx1");
 
-      Matrix M = new Matrix(dim, dim);
+      MatrixQ M = new MatrixQ(dim, dim);
 
       for (int i = 1; i <= dim; i++) {
         M[i, i] = diag_vector[i];
@@ -488,7 +490,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="diag_vector">column vector containing the diag elements</param>
     /// <returns></returns>
-    public static Matrix Diag(Matrix diag_vector, int offset) {
+    public static MatrixQ Diag(MatrixQ diag_vector, int offset) {
       int dim = diag_vector.VectorLength();
 
 
@@ -498,7 +500,7 @@ namespace smad1.src {
       //if (Math.Abs(offset) >= dim)
       //    throw new ArgumentException("Absolute value of offset must be less than length of diag_vector.");
 
-      Matrix M = new Matrix(dim + Math.Abs(offset), dim + Math.Abs(offset));
+      MatrixQ M = new MatrixQ(dim + Math.Abs(offset), dim + Math.Abs(offset));
       dim = M.RowCount;
 
       if (offset >= 0) {
@@ -525,7 +527,7 @@ namespace smad1.src {
     /// <param name="u">Value of upper secondary diagonal.</param>
     /// <param name="n">Dimension of the output matrix.</param>
     /// <returns>nxn tri-diagonal matrix.</returns>
-    public static Matrix TriDiag(Complex l, Complex d, Complex u, int n) {
+    public static MatrixQ TriDiag(Complex l, Complex d, Complex u, int n) {
       if (n <= 1)
         throw new ArgumentException("Matrix dimension must greater than one.");
 
@@ -541,7 +543,7 @@ namespace smad1.src {
     /// <param name="d">Main diagonal vector.</param>
     /// <param name="u">Upper secondary diagonal vector.</param>
     /// <returns></returns>
-    public static Matrix TriDiag(Matrix l, Matrix d, Matrix u) {
+    public static MatrixQ TriDiag(MatrixQ l, MatrixQ d, MatrixQ u) {
       int sizeL = l.VectorLength();
       int sizeD = d.VectorLength();
       int sizeU = u.VectorLength();
@@ -566,7 +568,7 @@ namespace smad1.src {
     /// <param name="v">Row or column vector.</param>
     /// <param name="w">Row or column vector.</param>
     /// <returns>Dot product.</returns>
-    public static Complex Dot(Matrix v, Matrix w) {
+    public static Complex Dot(MatrixQ v, MatrixQ w) {
       int m = v.VectorLength();
       int n = w.VectorLength();
 
@@ -590,7 +592,7 @@ namespace smad1.src {
     /// <param name="n"></param>
     /// <returns></returns>
     public static Complex Fib(int n) {
-      Matrix M = Ones(2, 2);
+      MatrixQ M = Ones(2, 2);
       M[2, 2] = Complex.Zero;
 
       return (M ^ (n - 1))[1, 1];
@@ -602,8 +604,8 @@ namespace smad1.src {
     /// </summary>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static Matrix RandomGraph(int n) {
-      Matrix buf = Random(n, n);
+    public static MatrixQ RandomGraph(int n) {
+      MatrixQ buf = Random(n, n);
 
       buf -= Diag(buf.DiagVector());
 
@@ -619,8 +621,8 @@ namespace smad1.src {
     /// <param name="p">Defines probability for an edge being less than +infty. Should be in [0,1],
     /// p = 1 gives complete directed graph; p = 0 gives no edges.</param>
     /// <returns></returns>
-    public static Matrix RandomGraph(int n, double p) {
-      Matrix buf = new Matrix(n);
+    public static MatrixQ RandomGraph(int n, double p) {
+      MatrixQ buf = new MatrixQ(n);
 
       Random r = new Random();
 
@@ -639,8 +641,8 @@ namespace smad1.src {
     /// <param name="m"></param>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static Matrix Random(int m, int n) {
-      Matrix M = new Matrix(m, n);
+    public static MatrixQ Random(int m, int n) {
+      MatrixQ M = new MatrixQ(m, n);
       Random r = new Random();
 
       for (int i = 1; i <= m; i++) {
@@ -658,8 +660,8 @@ namespace smad1.src {
     /// <param name="m"></param>
     /// <param name="n"></param>
     /// <returns></returns>
-    public static Matrix Random(int n) {
-      Matrix M = new Matrix(n);
+    public static MatrixQ Random(int n) {
+      MatrixQ M = new MatrixQ(n);
       Random r = new Random();
 
       for (int i = 1; i <= n; i++) {
@@ -678,8 +680,8 @@ namespace smad1.src {
     /// <param name="hi">Exclusive upper bound</param>
     /// <param name="n">Number of rows and columns each.</param>
     /// <returns></returns>
-    public static Matrix Random(int n, int lo, int hi) {
-      Matrix M = new Matrix(n);
+    public static MatrixQ Random(int n, int lo, int hi) {
+      MatrixQ M = new MatrixQ(n);
       Random r = new Random();
 
       for (int i = 1; i <= n; i++) {
@@ -698,8 +700,8 @@ namespace smad1.src {
     /// <param name="n">Number of columns.</param>
     /// <param name="p">Probability fro an entry to be one, expecting a value in [0,1].</param>
     /// <returns></returns>
-    public static Matrix RandomZeroOne(int m, int n, double p) {
-      Matrix M = new Matrix(m, n);
+    public static MatrixQ RandomZeroOne(int m, int n, double p) {
+      MatrixQ M = new MatrixQ(m, n);
       Random r = new Random();
 
       for (int i = 1; i <= m; i++)
@@ -715,8 +717,8 @@ namespace smad1.src {
     /// <param name="n">Number of rows and columns, resp.</param>
     /// <param name="p">Probability fro an entry to be one, expecting a value in [0,1].</param>
     /// <returns></returns>
-    public static Matrix RandomZeroOne(int n, double p) {
-      Matrix M = new Matrix(n, n);
+    public static MatrixQ RandomZeroOne(int n, double p) {
+      MatrixQ M = new MatrixQ(n, n);
       Random r = new Random();
 
       for (int i = 1; i <= n; i++)
@@ -734,8 +736,8 @@ namespace smad1.src {
     /// <param name="m">Number of rows.</param>
     /// <param name="n">Number of columns.</param>
     /// <returns></returns>
-    public static Matrix Random(int m, int n, int lo, int hi) {
-      Matrix M = new Matrix(m, n);
+    public static MatrixQ Random(int m, int n, int lo, int hi) {
+      MatrixQ M = new MatrixQ(m, n);
       Random r = new Random();
 
       for (int i = 1; i <= m; i++) {
@@ -747,13 +749,13 @@ namespace smad1.src {
       return M;
     }
 
-    public static Matrix Vandermonde(Complex[] x) {
+    public static MatrixQ Vandermonde(Complex[] x) {
       if (x == null || x.Length < 1)
         throw new ArgumentNullException();
 
       int n = x.Length - 1;
 
-      Matrix V = new Matrix(n + 1);
+      MatrixQ V = new MatrixQ(n + 1);
 
       for (int i = 0; i <= n; i++)
         for (int p = 0; p <= n; p++)
@@ -771,7 +773,7 @@ namespace smad1.src {
     /// <returns>Two matrices D and P, where D[u,v] holds the distance of the shortest
     /// path between u and v, and P[u,v] holds the shortcut vertex on the way from
     /// u to v.</returns>
-    public static Matrix[] Floyd(Matrix adjacence_matrix) {
+    public static MatrixQ[] Floyd(MatrixQ adjacence_matrix) {
       if (!adjacence_matrix.IsSquare())
         throw new ArgumentException("Expected square matrix.");
       else if (!adjacence_matrix.IsReal())
@@ -779,8 +781,8 @@ namespace smad1.src {
 
       int n = adjacence_matrix.RowCount;
 
-      Matrix D = adjacence_matrix.Clone(); // distance matrix
-      Matrix P = new Matrix(n);
+      MatrixQ D = adjacence_matrix.Clone(); // distance matrix
+      MatrixQ P = new MatrixQ(n);
 
       double buf;
 
@@ -794,7 +796,7 @@ namespace smad1.src {
             }
           }
 
-      return new Matrix[] { D, P };
+      return new MatrixQ[] { D, P };
     }
 
     /// <summary>
@@ -805,7 +807,7 @@ namespace smad1.src {
     /// <param name="i">One-based index of start vertex.</param>
     /// <param name="j">One-based index of end vertex.</param>
     /// <returns></returns>
-    public static ArrayList FloydPath(Matrix P, int i, int j) {
+    public static ArrayList FloydPath(MatrixQ P, int i, int j) {
       if (!P.IsSquare())
         throw new ArgumentException("Path matrix must be square.");
       else if (!P.IsReal())
@@ -838,7 +840,7 @@ namespace smad1.src {
     /// <param name="adjacence_matrix">A[i,j] = 0 or +infty, if there is no edge from i to j; any non-zero value otherwise.</param>
     /// <param name="root">The vertex to begin the search.</param>
     /// <returns>Adjacence matrix of the computed spanning tree.</returns>
-    public static Matrix DFS(Matrix adjacence_matrix, int root) {
+    public static MatrixQ DFS(MatrixQ adjacence_matrix, int root) {
       if (!adjacence_matrix.IsSquare())
         throw new ArgumentException("Adjacence matrices are expected to be square.");
       else if (!adjacence_matrix.IsReal())
@@ -851,7 +853,7 @@ namespace smad1.src {
       if (root < 1 || root > n)
         throw new ArgumentException("Root must be a vertex of the graph, e.i. in {1, ..., n}.");
 
-      Matrix spanTree = new Matrix(n);
+      MatrixQ spanTree = new MatrixQ(n);
 
       bool[] marked = new bool[n + 1];
 
@@ -899,7 +901,7 @@ namespace smad1.src {
     /// <param name="adjacence_matrix">A[i,j] = 0 or +infty, if there is no edge from i to j; any non-zero value otherwise.</param>
     /// <param name="root">The vertex to begin the search.</param>
     /// <returns>Adjacence matrix of the computed spanning tree.</returns>
-    public static Matrix BFS(Matrix adjacence_matrix, int root) {
+    public static MatrixQ BFS(MatrixQ adjacence_matrix, int root) {
       if (!adjacence_matrix.IsSquare())
         throw new ArgumentException("Adjacence matrices are expected to be square.");
       else if (!adjacence_matrix.IsReal())
@@ -911,7 +913,7 @@ namespace smad1.src {
       if (root < 1 || root > n)
         throw new ArgumentException("Root must be a vertex of the graph, e.i. in {1, ..., n}.");
 
-      Matrix spanTree = new Matrix(n);
+      MatrixQ spanTree = new MatrixQ(n);
 
       bool[] marked = new bool[n + 1];
 
@@ -960,10 +962,10 @@ namespace smad1.src {
     /// <param name="n">Number of columns.</param>
     /// <param name="p">Probability of each entry being 1.</param>
     /// <returns></returns>
-    public static Matrix ZeroOneRandom(int m, int n, double p) {
+    public static MatrixQ ZeroOneRandom(int m, int n, double p) {
       Random r = new Random();
 
-      Matrix buf = Zeros(m, n);
+      MatrixQ buf = Zeros(m, n);
 
       for (int i = 1; i <= m; i++) {
         for (int j = 1; j <= n; j++) {
@@ -981,10 +983,10 @@ namespace smad1.src {
     /// <param name="n">Number of rows and columns.</param>
     /// <param name="p">Probability of each entry being 1.</param>
     /// <returns></returns>
-    public static Matrix ZeroOneRandom(int n, double p) {
+    public static MatrixQ ZeroOneRandom(int n, double p) {
       Random r = new Random();
 
-      Matrix buf = Zeros(n);
+      MatrixQ buf = Zeros(n);
 
       for (int i = 1; i <= n; i++) {
         for (int j = 1; j <= n; j++) {
@@ -1001,7 +1003,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="x"></param>
     /// <returns></returns>
-    private static Matrix[] HouseholderVector(Matrix x) {
+    private static MatrixQ[] HouseholderVector(MatrixQ x) {
       //throw new NotImplementedException("Supposingly buggy!");
 
       //if (!x.IsReal())
@@ -1012,11 +1014,11 @@ namespace smad1.src {
       if (n == 0)
         throw new InvalidOperationException("Expected vector as argument.");
 
-      Matrix y = x / x.Norm();
-      Matrix buf = y.Extract(2, n, 1, 1);
+      MatrixQ y = x / x.Norm();
+      MatrixQ buf = y.Extract(2, n, 1, 1);
       Complex s = Dot(buf, buf);
 
-      Matrix v = Zeros(n, 1);
+      MatrixQ v = Zeros(n, 1);
       v[1] = Complex.One;
 
       v.Insert(2, 1, buf);
@@ -1034,7 +1036,7 @@ namespace smad1.src {
         v = v / v[1];
       }
 
-      return new Matrix[] { v, new Matrix(beta) };
+      return new MatrixQ[] { v, new MatrixQ(beta) };
 
     }
 
@@ -1046,13 +1048,13 @@ namespace smad1.src {
     /// <param name="C">Lower left sub matrix.</param>
     /// <param name="D">Lower right sub matrix.</param>
     /// <returns></returns>
-    public static Matrix BlockMatrix(Matrix A, Matrix B, Matrix C, Matrix D) {
+    public static MatrixQ BlockMatrix(MatrixQ A, MatrixQ B, MatrixQ C, MatrixQ D) {
 
       if (A.RowCount != B.RowCount || C.RowCount != D.RowCount
           || A.ColumnCount != C.ColumnCount || B.ColumnCount != D.ColumnCount)
         throw new ArgumentException("Matrix dimensions must agree.");
 
-      Matrix R = new Matrix(A.RowCount + C.RowCount, A.ColumnCount + B.ColumnCount);
+      MatrixQ R = new MatrixQ(A.RowCount + C.RowCount, A.ColumnCount + B.ColumnCount);
 
       for (int i = 1; i <= R.rowCount; i++)
         for (int j = 1; j <= R.columnCount; j++)
@@ -1078,9 +1080,9 @@ namespace smad1.src {
     /// </summary>
     /// <param name="b">Vector of appropriate length.</param>
     /// <remarks>Approximately n^3/3 + 2n^2 dot operations ~> O(n^3)</remarks>
-    public static Matrix Solve(Matrix A, Matrix b) {
-      Matrix A2 = A.Clone();
-      Matrix b2 = b.Clone();
+    public static MatrixQ Solve(MatrixQ A, MatrixQ b) {
+      MatrixQ A2 = A.Clone();
+      MatrixQ b2 = b.Clone();
 
 
       if (!A2.IsSquare())
@@ -1088,7 +1090,7 @@ namespace smad1.src {
 
       int n = A2.RowCount;
 
-      Matrix P = A2.LUSafe();
+      MatrixQ P = A2.LUSafe();
 
       // We know: PA = LU => [ Ax = b <=> P'LUx = b <=> L(Ux) = (Pb)] since P is orthogonal
       // set y := Ux, solve Ly = Pb by forward insertion
@@ -1117,8 +1119,8 @@ namespace smad1.src {
     /// Returns the matrix of the real parts of the entries of this matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix Re() {
-      Matrix M = new Matrix(rowCount, columnCount);
+    public MatrixQ Re() {
+      MatrixQ M = new MatrixQ(rowCount, columnCount);
 
       for (int i = 1; i <= rowCount; i++)
         for (int j = 1; j <= columnCount; j++)
@@ -1131,8 +1133,8 @@ namespace smad1.src {
     /// Returns the matrix of the imaginary parts of the entries of this matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix Im() {
-      Matrix M = new Matrix(rowCount, columnCount);
+    public MatrixQ Im() {
+      MatrixQ M = new MatrixQ(rowCount, columnCount);
 
       for (int i = 1; i <= rowCount; i++)
         for (int j = 1; j <= columnCount; j++)
@@ -1146,17 +1148,17 @@ namespace smad1.src {
     /// is returned, with H Hessenbergian, Q orthogonal and H = Q'AQ.
     /// </summary>
     /// <returns></returns>
-    public Matrix[] HessenbergHouseholder() {
+    public MatrixQ[] HessenbergHouseholder() {
       //throw new NotImplementedException("Still buggy!");
 
       if (!this.IsSquare())
         throw new InvalidOperationException("Cannot perform Hessenberg Householder decomposition of non-square matrix.");
 
       int n = rowCount;
-      Matrix Q = Identity(n);
-      Matrix H = this.Clone();
-      Matrix I, N, R, P;
-      Matrix[] vbeta = new Matrix[2];
+      MatrixQ Q = Identity(n);
+      MatrixQ H = this.Clone();
+      MatrixQ I, N, R, P;
+      MatrixQ[] vbeta = new MatrixQ[2];
       int m;
 
       // don't try to understand from the code alone.
@@ -1177,7 +1179,7 @@ namespace smad1.src {
         Q = Q * P;
       }
 
-      return new Matrix[] { H, Q };
+      return new MatrixQ[] { H, Q };
 
     }
 
@@ -1189,11 +1191,11 @@ namespace smad1.src {
     /// <param name="j1">Start column.</param>
     /// <param name="j2">End column.</param>
     /// <returns></returns>
-    public Matrix Extract(int i1, int i2, int j1, int j2) {
+    public MatrixQ Extract(int i1, int i2, int j1, int j2) {
       if (i2 < i1 || j2 < j1 || i1 <= 0 || j2 <= 0 || i2 > rowCount || j2 > columnCount)
         throw new ArgumentException("Index exceeds matrix dimension.");
 
-      Matrix B = new Matrix(i2 - i1 + 1, j2 - j1 + 1);
+      MatrixQ B = new MatrixQ(i2 - i1 + 1, j2 - j1 + 1);
 
       for (int i = i1; i <= i2; i++)
         for (int j = j1; j <= j2; j++)
@@ -1206,8 +1208,8 @@ namespace smad1.src {
     /// Extracts lower trapeze matrix of this matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix ExtractLowerTrapeze() {
-      Matrix buf = new Matrix(rowCount, columnCount);
+    public MatrixQ ExtractLowerTrapeze() {
+      MatrixQ buf = new MatrixQ(rowCount, columnCount);
 
       for (int i = 1; i <= rowCount; i++) {
         for (int j = 1; j <= i; j++) {
@@ -1222,8 +1224,8 @@ namespace smad1.src {
     /// Extracts upper trapeze matrix of this matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix ExtractUpperTrapeze() {
-      Matrix buf = new Matrix(rowCount, columnCount);
+    public MatrixQ ExtractUpperTrapeze() {
+      MatrixQ buf = new MatrixQ(rowCount, columnCount);
 
       for (int i = 1; i <= rowCount; i++) {
         for (int j = i; j <= columnCount; j++) {
@@ -1238,8 +1240,8 @@ namespace smad1.src {
     /// Splits matrix into its column vectors.
     /// </summary>
     /// <returns>Array of column vectors.</returns>
-    public Matrix[] ColumnVectorize() {
-      Matrix[] buf = new Matrix[columnCount];
+    public MatrixQ[] ColumnVectorize() {
+      MatrixQ[] buf = new MatrixQ[columnCount];
 
       for (int j = 1; j <= buf.Length; j++) {
         buf[j] = this.Column(j);
@@ -1252,8 +1254,8 @@ namespace smad1.src {
     /// Splits matrix into its row vectors.
     /// </summary>
     /// <returns>Array of row vectors.</returns>
-    public Matrix[] RowVectorize() {
-      Matrix[] buf = new Matrix[rowCount];
+    public MatrixQ[] RowVectorize() {
+      MatrixQ[] buf = new MatrixQ[rowCount];
 
       for (int i = 1; i <= buf.Length; i++) {
         buf[i] = this.Row(i);
@@ -1353,8 +1355,8 @@ namespace smad1.src {
     /// </summary>
     /// <param name="i">One-based index at which to extract.</param>
     /// <returns>Row vector.</returns>
-    public Matrix ExtractRow(int i) {
-      Matrix buf = this.Row(i);
+    public MatrixQ ExtractRow(int i) {
+      MatrixQ buf = this.Row(i);
       this.DeleteRow(i);
 
       return buf;
@@ -1365,11 +1367,11 @@ namespace smad1.src {
     /// </summary>
     /// <param name="j">One-based index at which to extract.</param>
     /// <returns>Row vector.</returns>
-    public Matrix ExtractColumn(int j) {
+    public MatrixQ ExtractColumn(int j) {
       if (j <= 0 || j > columnCount)
         throw new ArgumentException("Index must be positive and <= number of cols.");
 
-      Matrix buf = this.Column(j);
+      MatrixQ buf = this.Column(j);
       this.DeleteColumn(j);
 
       return buf;
@@ -1380,7 +1382,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="row">Vector to insert</param>
     /// <param name="i">One-based index at which to insert</param>
-    public void InsertRow(Matrix row, int i) {
+    public void InsertRow(MatrixQ row, int i) {
       int size = row.VectorLength();
 
       if (size == 0)
@@ -1421,7 +1423,7 @@ namespace smad1.src {
     /// <param name="i">One-based row number to insert.</param>
     /// <param name="j">One-based column number to insert.</param>
     /// <param name="M">Sub matrix to insert.</param>
-    public void Insert(int i, int j, Matrix M) {
+    public void Insert(int i, int j, MatrixQ M) {
       for (int m = 1; m <= M.rowCount; m++)
         for (int n = 1; n <= M.columnCount; n++)
           this[i + m - 1, j + n - 1] = M[m, n];
@@ -1432,7 +1434,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="col">Vector to insert</param>
     /// <param name="j">One-based index at which to insert</param>
-    public void InsertColumn(Matrix col, int j) {
+    public void InsertColumn(MatrixQ col, int j) {
       int size = col.VectorLength();
 
       if (size == 0)
@@ -1469,7 +1471,7 @@ namespace smad1.src {
     /// Inverts square matrix as long as det != 0.
     /// </summary>
     /// <returns>Inverse of matrix.</returns>
-    public Matrix Inverse() {
+    public MatrixQ Inverse() {
       if (!this.IsSquare())
         throw new InvalidOperationException("Cannot invert non-square matrix.");
 
@@ -1480,7 +1482,7 @@ namespace smad1.src {
 
       int n = this.columnCount;
 
-      if (n == 1) return new Matrix(1 / det);
+      if (n == 1) return new MatrixQ(1 / det);
 
       if (this.IsReal() && this.IsOrthogonal())
         return this.Transpose();
@@ -1488,7 +1490,7 @@ namespace smad1.src {
         return this.ConjTranspose();
 
       if (this.IsDiagonal()) {
-        Matrix d = this.DiagVector();
+        MatrixQ d = this.DiagVector();
 
         for (int i = 1; i <= n; i++)
           d[i] = 1 / d[i];
@@ -1504,32 +1506,32 @@ namespace smad1.src {
         }
       }
 
-      return (new Matrix(buf) / det);
+      return (new MatrixQ(buf) / det);
     }
 
     /// <summary>
     /// Alternative matrix inversion using Leverrier's formula
     /// </summary>
     /// <returns>Inverse of matrix.</returns>
-    public Matrix InverseLeverrier() {
+    public MatrixQ InverseLeverrier() {
       if (!this.IsSquare())
         throw new InvalidOperationException("Cannot invert non-square matrix.");
       //else if (this.Determinant() == 0)
       //    throw new InvalidOperationException("Cannot invert (nearly) singular matrix.");
 
       int n = this.rowCount;
-      Matrix Id = Identity(n);
-      Matrix B = Id;
+      MatrixQ Id = Identity(n);
+      MatrixQ B = Id;
       Complex alpha;
 
       for (int k = 1; k < n; k++) {
-        Matrix buf = (this * B); // DEBUG                
+        MatrixQ buf = (this * B); // DEBUG                
         Complex buf2 = buf.Trace(); // DEBUG
         alpha = ((double)1 / k) * buf.Trace();
         B = alpha * Id - buf;
       }
 
-      Matrix buf3 = (this * B); // DEBUG                
+      MatrixQ buf3 = (this * B); // DEBUG                
       Complex buf4 = buf3.Trace(); // DEBUG
       alpha = (this * B).Trace() / n;
       if (alpha != Complex.Zero)
@@ -1545,7 +1547,7 @@ namespace smad1.src {
     /// <param name="row"></param>
     /// <param name="col"></param>
     /// <returns></returns>
-    public Matrix Minor(int i, int j) {
+    public MatrixQ Minor(int i, int j) {
       // THIS IS THE LOW-LEVEL SOLUTION ~ O(n^2)
       //Complex[,] buf = new Complex[RowCount - 1, ColumnCount - 1];
       //int r = 0;
@@ -1573,7 +1575,7 @@ namespace smad1.src {
 
       // THIS IS THE HIGH-LEVEL SOLUTION ~ O(n)
 
-      Matrix A = this.Clone();
+      MatrixQ A = this.Clone();
 
       A.DeleteRow(i);
       A.DeleteColumn(j);
@@ -1585,8 +1587,8 @@ namespace smad1.src {
     /// Provides a shallow copy of this matrix in O(m).
     /// </summary>
     /// <returns></returns>
-    public Matrix Clone() {
-      Matrix A = new Matrix();
+    public MatrixQ Clone() {
+      MatrixQ A = new MatrixQ();
       A.rowCount = rowCount;
       A.columnCount = columnCount;
 
@@ -1600,11 +1602,11 @@ namespace smad1.src {
     /// Extracts main diagonal vector of the matrix as a column vector.
     /// </summary>
     /// <returns></returns>
-    public Matrix DiagVector() {
+    public MatrixQ DiagVector() {
       if (!this.IsSquare())
         throw new InvalidOperationException("Cannot get diagonal of non-square matrix.");
 
-      Matrix v = new Matrix(this.columnCount, 1);
+      MatrixQ v = new MatrixQ(this.columnCount, 1);
 
       for (int i = 1; i <= this.columnCount; i++) {
         v[i] = this[i, i];
@@ -1618,8 +1620,8 @@ namespace smad1.src {
     /// </summary>
     /// <param name="j"></param>
     /// <returns>j-th column...</returns>
-    public Matrix Column(int j) {
-      Matrix buf = new Matrix(this.rowCount, 1);
+    public MatrixQ Column(int j) {
+      MatrixQ buf = new MatrixQ(this.rowCount, 1);
 
       for (int i = 1; i <= this.rowCount; i++) {
         buf[i] = this[i, j];
@@ -1633,13 +1635,13 @@ namespace smad1.src {
     /// </summary>
     /// <param name="i"></param>
     /// <returns>i-th row...</returns>
-    public Matrix Row(int i) {
+    public MatrixQ Row(int i) {
       if (i <= 0 || i > rowCount)
         throw new ArgumentException("Index exceed matrix dimension.");
 
       //return (new Matrix((Complex[])((ArrayList)Values[i - 1]).ToArray(typeof(Complex)))).Transpose();
 
-      Matrix buf = new Matrix(columnCount, 1);
+      MatrixQ buf = new MatrixQ(columnCount, 1);
 
       for (int j = 1; j <= this.columnCount; j++) {
         buf[j] = this[i, j];
@@ -1652,8 +1654,8 @@ namespace smad1.src {
     /// Swaps each matrix entry A[i, j] with A[j, i].
     /// </summary>
     /// <returns>A transposed matrix.</returns>
-    public Matrix Transpose() {
-      Matrix M = new Matrix(columnCount, rowCount);
+    public MatrixQ Transpose() {
+      MatrixQ M = new MatrixQ(columnCount, rowCount);
 
       for (int i = 1; i <= columnCount; i++) {
         for (int j = 1; j <= rowCount; j++) {
@@ -1668,8 +1670,8 @@ namespace smad1.src {
     /// Replaces each matrix entry z = x + iy with x - iy.
     /// </summary>
     /// <returns>Conjugated matrix.</returns>
-    public Matrix Conjugate() {
-      Matrix M = new Matrix(rowCount, columnCount);
+    public MatrixQ Conjugate() {
+      MatrixQ M = new MatrixQ(rowCount, columnCount);
 
       for (int i = 1; i <= rowCount; i++) {
         for (int j = 1; j <= columnCount; j++) {
@@ -1684,7 +1686,7 @@ namespace smad1.src {
     /// Conjuagtes and transposes a matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix ConjTranspose() {
+    public MatrixQ ConjTranspose() {
       return this.Transpose().Conjugate();
     }
 
@@ -1723,13 +1725,13 @@ namespace smad1.src {
     /// </summary>
     /// <returns>Permutation matrix P with P*this = L*U</returns>
     /// <remarks>This needs additional time O(n^2).</remarks>
-    public Matrix LUSafe() {
+    public MatrixQ LUSafe() {
       if (!this.IsSquare())
         throw new InvalidOperationException("Cannot perform LU-decomposition of non-square matrix.");
 
       int n = this.columnCount;
 
-      Matrix P = Identity(n); // permutation matrix
+      MatrixQ P = Identity(n); // permutation matrix
       int m;
 
       for (int j = 1; j <= n; j++) {
@@ -1839,7 +1841,7 @@ namespace smad1.src {
     /// The matrix is not changed.
     /// </summary>
     /// <param name="b">Vector of height n, if matrix is n by n.</param>
-    public void ForwardInsertion(Matrix b) {
+    public void ForwardInsertion(MatrixQ b) {
       if (!this.IsLowerTriangular())
         throw new InvalidOperationException("Cannot perform forward insertion for matrix not being lower triangular.");
 
@@ -1867,7 +1869,7 @@ namespace smad1.src {
     /// The matrix is not changed.
     /// </summary>
     /// <param name="b">Vector of height n, if matrix is n by n.</param>
-    public void BackwardInsertion(Matrix b) {
+    public void BackwardInsertion(MatrixQ b) {
       if (!this.IsUpperTriangular())
         throw new InvalidOperationException("Cannot perform backward insertion for matrix not being upper triangular.");
 
@@ -1919,14 +1921,14 @@ namespace smad1.src {
     /// n by n and upper triangular matrix.
     /// </summary>
     /// <returns></returns>
-    public Matrix[] QRGramSchmidt() {
+    public MatrixQ[] QRGramSchmidt() {
       int m = rowCount;
       int n = columnCount;
 
-      Matrix A = this.Clone();
+      MatrixQ A = this.Clone();
 
-      Matrix Q = new Matrix(m, n);
-      Matrix R = new Matrix(n, n);
+      MatrixQ Q = new MatrixQ(m, n);
+      MatrixQ R = new MatrixQ(n, n);
 
       // the first column of Q equals the first column of this matrix
       for (int i = 1; i <= m; i++)
@@ -1948,7 +1950,7 @@ namespace smad1.src {
         }
       }
 
-      return new Matrix[] { Q, R };
+      return new MatrixQ[] { Q, R };
     }
 
     /// <summary>
@@ -1959,7 +1961,7 @@ namespace smad1.src {
     /// to be like |L1| > |L2| > ... > |Ln| for QR iteration to work properly.
     /// </summary>
     /// <returns></returns>
-    public Matrix Eigenvalues() {
+    public MatrixQ Eigenvalues() {
       return this.QRIterationBasic(40).DiagVector();
 
     }
@@ -1969,7 +1971,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="eigenvalue"></param>
     /// <returns></returns>
-    public Matrix Eigenvector(Complex eigenvalue) {
+    public MatrixQ Eigenvector(Complex eigenvalue) {
 
       throw new NotImplementedException();
 
@@ -1980,7 +1982,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="b"></param>
     /// <returns></returns>
-    public Matrix SolveCG(Matrix b) {
+    public MatrixQ SolveCG(MatrixQ b) {
       throw new NotImplementedException("Still buggy!");
     }
 
@@ -1989,12 +1991,12 @@ namespace smad1.src {
     /// </summary>
     /// <param name="max_iterations"></param>
     /// <returns></returns>
-    public Matrix QRIterationBasic(int max_iterations) {
+    public MatrixQ QRIterationBasic(int max_iterations) {
       if (!this.IsReal())
         throw new InvalidOperationException("Basic QR iteration is possible only for real matrices.");
 
-      Matrix T = this.Clone();
-      Matrix[] QR = new Matrix[2];
+      MatrixQ T = this.Clone();
+      MatrixQ[] QR = new MatrixQ[2];
 
       for (int i = 0; i < max_iterations; i++) {
         QR = T.QRGramSchmidt();
@@ -2009,7 +2011,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="max_iterations"></param>
     /// <returns></returns>
-    public Matrix QRIterationHessenberg(int max_iterations) {
+    public MatrixQ QRIterationHessenberg(int max_iterations) {
 
       throw new NotImplementedException("Still buggy!");
     }
@@ -2019,7 +2021,7 @@ namespace smad1.src {
     /// </summary>
     /// <param name="H"></param>
     /// <returns></returns>
-    public Matrix[] QRGivens() {
+    public MatrixQ[] QRGivens() {
 
       throw new NotImplementedException("Still buggy!");
     }
@@ -2031,11 +2033,11 @@ namespace smad1.src {
     /// <param name="s"></param>
     /// <param name="n"></param>
     /// <returns></returns>
-    private Matrix GivProd(Matrix c, Matrix s, int n) {
+    private MatrixQ GivProd(MatrixQ c, MatrixQ s, int n) {
       int n1 = n - 1;
       int n2 = n - 2;
 
-      Matrix Q = Eye(n);
+      MatrixQ Q = Eye(n);
       Q[n1, n1] = c[n1];
       Q[n, n] = c[n1];
       Q[n1, n] = s[n1];
@@ -2045,7 +2047,7 @@ namespace smad1.src {
         int k1 = k + 1;
         Q[k, k] = c[k];
         Q[k1, k] = -s[k];
-        Matrix q = Q.Extract(k1, k1, k1, n);
+        MatrixQ q = Q.Extract(k1, k1, k1, n);
         Q.Insert(k, k1, s[k] * q);
         Q.Insert(k1, k1, c[k] * q);
       }
@@ -2139,14 +2141,14 @@ namespace smad1.src {
       }
       else {
         // perform LU-decomposition & return product of diagonal elements of U
-        Matrix X = this.Clone();
+        MatrixQ X = this.Clone();
 
         // for speed concerns, use this
         //X.LU();
         //return X.DiagProd();
 
         // this is slower and needs more memory... .
-        Matrix P = X.LUSafe();
+        MatrixQ P = X.LUSafe();
         return (double)P.Signum() * X.DiagProd();
       }
     }
@@ -2607,14 +2609,14 @@ namespace smad1.src {
       // using Gram-Schmidt orthogonalization
       int n = this.rowCount;
 
-      Matrix[] y = new Matrix[n + 1];
+      MatrixQ[] y = new MatrixQ[n + 1];
       for (int i = 0; i <= n; i++)
-        y[i] = Matrix.Zeros(n, 1);
+        y[i] = MatrixQ.Zeros(n, 1);
 
       y[1] = this.Column(1);
 
-      Matrix xk; // to buffer this.Column(k)
-      Matrix buf;
+      MatrixQ xk; // to buffer this.Column(k)
+      MatrixQ buf;
 
       // Gram-Schmidt:
       for (int k = 2; k <= n; k++) {
@@ -2865,7 +2867,7 @@ namespace smad1.src {
       return -1;
     }
 
-    public static bool operator ==(Matrix A, Matrix B) {
+    public static bool operator ==(MatrixQ A, MatrixQ B) {
 
       if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
         return false;
@@ -2879,11 +2881,11 @@ namespace smad1.src {
       return true;
     }
 
-    public static bool operator !=(Matrix A, Matrix B) {
+    public static bool operator !=(MatrixQ A, MatrixQ B) {
       return !(A == B);
     }
 
-    public static Matrix operator +(Matrix A, Matrix B) {
+    public static MatrixQ operator +(MatrixQ A, MatrixQ B) {
 
       if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
         throw new ArgumentException("Matrices must be of the same dimension.");
@@ -2897,7 +2899,7 @@ namespace smad1.src {
       return A;
     }
 
-    public static Matrix operator -(Matrix A, Matrix B) {
+    public static MatrixQ operator -(MatrixQ A, MatrixQ B) {
 
       if (A.RowCount != B.RowCount || A.ColumnCount != B.ColumnCount)
         throw new ArgumentException("Matrices must be of the same dimension.");
@@ -2911,7 +2913,7 @@ namespace smad1.src {
       return A;
     }
 
-    public static Matrix operator -(Matrix A) {
+    public static MatrixQ operator -(MatrixQ A) {
 
       for (int i = 1; i <= A.RowCount; i++) {
         for (int j = 1; j <= A.ColumnCount; j++) {
@@ -2922,12 +2924,12 @@ namespace smad1.src {
       return A;
     }
 
-    public static Matrix operator *(Matrix A, Matrix B) {
+    public static MatrixQ operator *(MatrixQ A, MatrixQ B) {
 
       if (A.ColumnCount != B.RowCount)
         throw new ArgumentException("Inner matrix dimensions must agree.");
 
-      Matrix C = new Matrix(A.RowCount, B.ColumnCount);
+      MatrixQ C = new MatrixQ(A.RowCount, B.ColumnCount);
 
       for (int i = 1; i <= A.RowCount; i++) {
         for (int j = 1; j <= B.ColumnCount; j++) {
@@ -2939,22 +2941,9 @@ namespace smad1.src {
 
     }
 
-    public static Matrix operator *(Matrix A, Complex x) {
+    public static MatrixQ operator *(MatrixQ A, Complex x) {
 
-      Matrix B = new Matrix(A.rowCount, A.columnCount);
-
-      for (int i = 1; i <= A.RowCount; i++) {
-        for (int j = 1; j <= A.ColumnCount; j++) {
-          B[i, j] = A[i, j] * x;
-        }
-      }
-
-      return B;
-    }
-
-    public static Matrix operator *(Complex x, Matrix A) {
-
-      Matrix B = new Matrix(A.RowCount, A.ColumnCount);
+      MatrixQ B = new MatrixQ(A.rowCount, A.columnCount);
 
       for (int i = 1; i <= A.RowCount; i++) {
         for (int j = 1; j <= A.ColumnCount; j++) {
@@ -2965,37 +2954,50 @@ namespace smad1.src {
       return B;
     }
 
-    public static Matrix operator *(Matrix A, double x) {
+    public static MatrixQ operator *(Complex x, MatrixQ A) {
+
+      MatrixQ B = new MatrixQ(A.RowCount, A.ColumnCount);
+
+      for (int i = 1; i <= A.RowCount; i++) {
+        for (int j = 1; j <= A.ColumnCount; j++) {
+          B[i, j] = A[i, j] * x;
+        }
+      }
+
+      return B;
+    }
+
+    public static MatrixQ operator *(MatrixQ A, double x) {
       return (new Complex(x)) * A;
     }
 
-    public static Matrix operator *(double x, Matrix A) {
+    public static MatrixQ operator *(double x, MatrixQ A) {
       return (new Complex(x)) * A;
     }
 
-    public static Matrix operator /(Matrix A, Complex x) {
+    public static MatrixQ operator /(MatrixQ A, Complex x) {
       return (1 / x) * A;
     }
 
-    public static Matrix operator /(Matrix A, double x) {
+    public static MatrixQ operator /(MatrixQ A, double x) {
       return (new Complex(1 / x)) * A;
     }
 
-    public static Matrix operator ^(Matrix A, int k) {
+    public static MatrixQ operator ^(MatrixQ A, int k) {
       if (k < 0)
         if (A.IsSquare())
           return A.InverseLeverrier() ^ (-k);
         else throw new InvalidOperationException("Cannot take non-square matrix to the power of zero.");
       else if (k == 0)
         if (A.IsSquare())
-          return Matrix.Identity(A.RowCount);
+          return MatrixQ.Identity(A.RowCount);
         else throw new InvalidOperationException("Cannot take non-square matrix to the power of zero.");
       else if (k == 1)
         if (A.IsSquare())
           return A;
         else throw new InvalidOperationException("Cannot take non-square matrix to the power of one.");
       else {
-        Matrix M = A;
+        MatrixQ M = A;
         for (int i = 1; i < k; i++) {
           M *= A;
         }
@@ -3161,6 +3163,6 @@ namespace smad1.src {
     }
 
     #endregion
+  
   }
-
 }

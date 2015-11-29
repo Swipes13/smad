@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace smad1.src {
+namespace smad5.src.math {
   static class RandomExtension {
     private static bool _haveNext = false;
     private static double _nextGauss = .0;

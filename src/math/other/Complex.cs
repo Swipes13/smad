@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace smad1.src {
+namespace smad5.src.math {
   public class Complex {
     double re;
     double im;
