@@ -7,9 +7,10 @@ using smad5.src.math;
 
 namespace smad5.src.labs {
   class Lab5 {
-    int countExperiments = 50;
+    int countExperiments = 10;
     double noize = 0.05;
 
+    double error = 0.01;
     private List<double> e = new List<double>();
     private List<double> u = new List<double>();
     private List<double> y = new List<double>();
@@ -23,9 +24,7 @@ namespace smad5.src.labs {
 
     protected double[] Tetta = new double[] { 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0 };
     protected double[] calcF(double[] x) {
-      double error = 0.01;
-      double e_ = math.Distribution.Normal(0.0, error);
-      return new double[9] { 1.0, x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[4] + 10.0 * x[5] - 4.0 * x[6] + e_ };
+      return new double[9] { 1.0, x[0], x[1], x[2], x[3], x[4], x[5], x[6], x[7] };
     }
     private double normVector(Matrix vec) {
       return (vec.Transpose() * vec)[0, 0];
@@ -39,6 +38,12 @@ namespace smad5.src.labs {
         result += tetta[i] * f[i];
       return result;
     }
+
+    private Matrix MNK(Matrix A, Matrix B, Matrix c) {
+      Matrix AT = A.Transpose();
+      return (AT * A + B).Inverse() * AT * c;
+    }
+
     public String GenerateData() {
       String text = "";
       int n = countExperiments;
@@ -52,12 +57,19 @@ namespace smad5.src.labs {
       List<double[]> points = new List<double[]>();
 
       for (int i = 0; i < n; i++) {
+        double e_ = math.Distribution.Normal(0.0, error);
+        double x1_ = math.Distribution.Flat(-x1, x1 * 2.0);
+        double x2_ = math.Distribution.Flat(-x2, x2 * 2.0);
+        double x3_ = math.Distribution.Flat(-x3, x3 * 2.0);
+        double x4_ = math.Distribution.Flat(-x4, x4 * 2.0);
+        double x5_ = math.Distribution.Flat(-x5, x5 * 2.0);
+        double x6_ = math.Distribution.Flat(-x6, x6 * 2.0);
+        double x7_ = math.Distribution.Flat(-x7, x7 * 2.0);
+        double x8_ = x4_ + 10.0 * x5_ - 4.0 * x6_ + e_;
+        //double x8_ = math.Distribution.Flat(-x6, x6 * 2.0);
+
         double[] point = new double[]{
-          math.Distribution.Flat(-x1,x1*2.0),math.Distribution.Flat(-x2,x2*2.0),
-          math.Distribution.Flat(-x3,x3*2.0),math.Distribution.Flat(-x4,x4*2.0),
-          math.Distribution.Flat(-x5,x5*2.0),math.Distribution.Flat(-x6,x6*2.0),
-          math.Distribution.Flat(-x7,x7*2.0),
-        };
+          x1_,x2_,x3_,x4_,x5_,x6_,x7_, x8_ };
         points.Add(point);
         double[] f = calcF(point);
         X[i] = new Matrix(m, f);
@@ -83,7 +95,7 @@ namespace smad5.src.labs {
       double detXTX_Trace = XTX_Trace.Determinant();
       text += "det(XTX/trace) = \t" + detXTX_Trace.ToString() + Environment.NewLine;
 
-      double maxL = XTX.MaxEiganValue(); // or XTX_Trace??
+      double maxL = XTX.MaxEiganValue(); 
       double minL = XTX.MinEiganValue();
       text += "minLambda = \t\t" + minL.ToString() + Environment.NewLine;
 
@@ -104,9 +116,7 @@ namespace smad5.src.labs {
           double rij = sum_up / (Math.Sqrt(sum_d1) * Math.Sqrt(sum_d2));
           if (i != j && Math.Abs(rij) > r_max)
             r_max = Math.Abs(rij);
-
           R[i, j] = rij;
-
         }
         R[j, j] = 1.0;
       }
@@ -121,46 +131,36 @@ namespace smad5.src.labs {
           r_max = ri;
       }
       text += "Max conjugation = \t" + r_max.ToString() + Environment.NewLine;
+      
       text += Environment.NewLine + "3. Ridge assessment" + Environment.NewLine;
 
       Matrix Z = X * Matrix.DiagonalSqrt(XTX).Inverse();
-      Matrix ZT = Z.Transpose();
-      Matrix ZTZ = ZT * Z;
 
       Matrix Y = new Matrix(1, y.ToArray());
       for (double lambda = 0.0; lambda <= 50; lambda += 1) {
-        Matrix Л = Matrix.Diagonal(XTX);
-        Л *= lambda;
-        Matrix temp = (XTX + Л).Inverse();
-
-        temp *= XT;
-        temp *= Y;
-        Tettas.Add(temp);
+        Matrix Л = Matrix.Diagonal(XTX) * lambda;
+        Tettas.Add(MNK(X, Л,Y));
 
         RSSs.Add(rss(X, Y, Tettas.Last()));
         Norms.Add(normVector(Tettas.Last()));
         Lamdas.Add(lambda);
-        Matrix ztzliInv = (ZTZ + lambda * Matrix.Identity(ZTZ.LenghtX())).Inverse();
-        Bettas.Add(ztzliInv*ZT*Y);
-        BettasScalars.Add(normVector(Bettas.Last()));
+
+        Bettas.Add(MNK(Z,lambda*Matrix.Identity(Z.LenghtY()),Y));
+        BettasScalars.Add(Math.Sqrt(normVector(Bettas.Last())));
       }
  
-      int center = Lamdas.Count - 1;
+      int center = Lamdas.Count/2;
       text += "Lambda = " + Lamdas[center].ToString() + Environment.NewLine + "Tetta = " + Environment.NewLine;
       for (int i = 0; i < Tettas.First().LenghtX(); i++) 
         text += Tettas[center][i,0].ToString() + Environment.NewLine;
 
       Matrix allBettas = new Matrix(BettasScalars.Count, BettasScalars.ToArray());
       double sigmaEst = rss(X, Y, Tettas.First()) / (n - m);
-      double lambdaNew = m * sigmaEst / BettasScalars.First();
 
-      Matrix Л2 = Matrix.Diagonal(XTX);
-      Л2 *= lambdaNew;
-      Matrix temp2 = (XTX + Л2).Inverse();
+      Matrix D = Matrix.DiagonalSqrt(XTX) * Tettas.First();
+      double lambdaNew = m * sigmaEst / Math.Sqrt(normVector(D));
 
-      temp2 *= XT;
-      temp2 *= Y;
-      Tettas.Add(temp2);
+      Tettas.Add(MNK(X,Matrix.Diagonal(XTX)*lambdaNew,Y));
 
       RSSs.Add(rss(X, Y, Tettas.Last()));
       Norms.Add(normVector(Tettas.Last()));
@@ -171,6 +171,7 @@ namespace smad5.src.labs {
         text += Tettas.Last()[i, 0].ToString() + Environment.NewLine;
 
       text += Environment.NewLine + "3. Main components" + Environment.NewLine;
+
 
       double[] x_center = new double[points[0].Count()];
       double y_center = 0.0;
@@ -188,7 +189,7 @@ namespace smad5.src.labs {
       for(int i = 0; i < points.Count; i++){
         double[] point = new double[points[0].Count()];
         for (int j = 0; j < points[i].Count(); j++)
-          point[j] = points[i][j] - x_center[j];
+          point[j] = points[i][j] - x_center[j];//X_center[i,j] = points[i][j] - x_center[j];
         double[] f = calcF(point);
         X_center[i] = new Matrix(m, f);
         y_cent.Add(y[i] - y_center);
@@ -196,11 +197,9 @@ namespace smad5.src.labs {
       Matrix Y_center = new Matrix(y_cent.Count, y_cent.ToArray());
       Matrix X_centerT = X_center.Transpose();
       Matrix X_centerTX_center = X_centerT*X_center;
-
       var eiganVals = X_centerTX_center.EiganValues();
       text += "eiganValues:" + Environment.NewLine;
       
-      /*
       Matrix nulMat =  new Matrix(m,1);
       List<Matrix> eiVecs = new List<Matrix>();
       for (int i = 0; i < eiganVals.Count(); i++) {
@@ -208,26 +207,26 @@ namespace smad5.src.labs {
         Matrix a_lI = X_centerTX_center - eiganVals[i] * Matrix.Identity(X_centerTX_center.LenghtX());
         eiVecs.Add(Matrix.GaussSolve(a_lI, nulMat));
       }
-      Matrix V = new Matrix(eiganVals.Count(),m);
-      for (int i = 0; i < eiganVals.Count(); i++) 
-        for (int j = 0; j < m; j++) 
-          V[i, j] = eiVecs[j][i,0];
+      Matrix V = new Matrix(m, eiganVals.Count());
+      for (int i = 0; i < m; i++)
+        for (int j = 0; j < eiganVals.Count(); j++) 
+          V[i, j] = eiVecs[i][j,0];
 
       Matrix Z_ = X_center * V; 
       int notCool = 3;
-      Matrix Vr = new Matrix(eiganVals.Count() - notCool, m);
-      Matrix Zr = new Matrix(Z_.LenghtX() - 3, Z_.LenghtY());
+      Matrix Vr = new Matrix(m,eiganVals.Count() - notCool);
+      Matrix Zr = new Matrix(Z_.LenghtX(), Z_.LenghtY()- notCool);
 
-      for (int i = 0; i < eiganVals.Count() - 3; i++)
-        for (int j = 0; j < m; j++) 
+      for (int i = 0; i < m; i++)
+        for (int j = 0; j < eiganVals.Count() - notCool; j++) 
           Vr[i, j] = V[i, j];
 
-      for (int i = 0; i < Z_.LenghtX() - 3; i++)
-        for (int j = 0; j < Z_.LenghtY(); j++)
+      for (int i = 0; i < Z_.LenghtX(); i++)
+        for (int j = 0; j < Z_.LenghtY() - notCool; j++)
           Zr[i, j] = Z_[i, j];
 
       Matrix bb = (Zr.Transpose() * Zr).Inverse() * Zr.Transpose() * Y_center;
-      Matrix tettaCenter = Vr * bb;*/
+      Matrix tettaCenter = Vr * bb;
       return text;
     }
   }

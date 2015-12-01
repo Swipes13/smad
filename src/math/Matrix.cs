@@ -358,5 +358,12 @@ namespace smad5.src.math {
           A[i,j] -= A[index,j] * value;
       }
     }
+
+    public void Round(int sign) {
+      for (int i = 0; i < LenghtX(); i++) 
+        for (int j = 0; j < LenghtY(); j++) 
+          matrix[i, j] = Math.Round(matrix[i, j], sign);
+    }
+
   }
 }
