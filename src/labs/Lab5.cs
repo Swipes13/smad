@@ -7,7 +7,7 @@ using smad5.src.math;
 
 namespace smad5.src.labs {
   class Lab5 {
-    int countExperiments = 10;
+    int countExperiments = 50;
     double noize = 0.05;
 
     double error = 0.01;
@@ -65,7 +65,7 @@ namespace smad5.src.labs {
         double x5_ = math.Distribution.Flat(-x5, x5 * 2.0);
         double x6_ = math.Distribution.Flat(-x6, x6 * 2.0);
         double x7_ = math.Distribution.Flat(-x7, x7 * 2.0);
-        double x8_ = x4_ + 10.0 * x5_ - 4.0 * x6_ + e_;
+        double x8_ = x1_ + 2.0 * x2_ - 3.0 * x3_ + e_;
         //double x8_ = math.Distribution.Flat(-x6, x6 * 2.0);
 
         double[] point = new double[]{
@@ -202,7 +202,7 @@ namespace smad5.src.labs {
       
       Matrix nulMat =  new Matrix(m,1);
       List<Matrix> eiVecs = new List<Matrix>();
-      for (int i = 0; i < eiganVals.Count(); i++) {
+      for (int i =  eiganVals.Count() -1; i >=0; i--) {
         text += eiganVals[i].ToString() + Environment.NewLine;
         Matrix a_lI = X_centerTX_center - eiganVals[i] * Matrix.Identity(X_centerTX_center.LenghtX());
         eiVecs.Add(Matrix.GaussSolve(a_lI, nulMat));
@@ -211,6 +211,7 @@ namespace smad5.src.labs {
       for (int i = 0; i < m; i++)
         for (int j = 0; j < eiganVals.Count(); j++) 
           V[i, j] = eiVecs[i][j,0];
+      return text;
 
       Matrix Z_ = X_center * V; 
       int notCool = 3;
