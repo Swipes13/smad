@@ -358,12 +358,25 @@ namespace smad5.src.math {
           A[i,j] -= A[index,j] * value;
       }
     }
-
+    public double Norm() {
+      return (this.Transpose() * this)[0, 0];
+    }
     public void Round(int sign) {
       for (int i = 0; i < LenghtX(); i++) 
         for (int j = 0; j < LenghtY(); j++) 
           matrix[i, j] = Math.Round(matrix[i, j], sign);
     }
 
+    public static double RSS(Matrix X, Matrix y, Matrix tetta) {
+      return (y - X * tetta).Norm();
+    }
+    public static Matrix MNK(Matrix X, Matrix B, Matrix y) {
+      Matrix AT = X.Transpose();
+      return (AT * X + B).Inverse() * AT * y;
+    }
+    public static Matrix MNK(Matrix X, Matrix y) {
+      Matrix AT = X.Transpose();
+      return (AT * X).Inverse() * AT * y;
+    }
   }
 }

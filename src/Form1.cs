@@ -11,12 +11,23 @@ using GuiExtension;
 
 namespace smad5 {
   public partial class Form1 : Form {
+    src.labs.Rgz rgz = new src.labs.Rgz();
     public Form1() {
       InitializeComponent();
-      doLab();
     }
+    private void doRgz() {
+      if (!rgz.Initialized) return;
+      rgz.GenerateOptimalModel();
 
-    private void doLab() {
+    }
+    private void doLab6() {
+      src.labs.Lab6 lab6 = new src.labs.Lab6();
+      try {
+        lab6.GenerateData(this);
+      }
+      catch (Exception ex) { MessageBox.Show(ex.Message); }
+    }
+    private void doLab5() {
       using (src.Writer.Open("output.txt")) {
         try {
           src.labs.Lab5 laba = new src.labs.Lab5();
@@ -29,6 +40,18 @@ namespace smad5 {
         }
         catch (Exception ex) {
           MessageBox.Show(ex.Message);
+        }
+      }
+    }
+    private void setDataToolStripMenuItem_Click(object sender, EventArgs e) {
+      OpenFileDialog ofd = new OpenFileDialog();
+      ofd.Multiselect = false;
+      if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK) {
+        if (ofd.FileName != "") {
+          if (!rgz.SetData(ofd.FileName))
+            MessageBox.Show("Чёт дате плохо");
+          else
+            doRgz();
         }
       }
     }
