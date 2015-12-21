@@ -9,7 +9,7 @@ using smad5.src.data;
 using Point = smad5.src.data.Point;
 
 namespace smad5.src.labs {
-  class Lab6 {
+  public class Lab6 {
     public struct TettaRSS {
       public static TettaRSS Compute(Matrix X, Matrix y) {
         TettaRSS ret = new TettaRSS();
@@ -29,15 +29,15 @@ namespace smad5.src.labs {
     protected double[] calcF(double[] x, bool[] need) {
       List<double> res = new List<double>();
       var f = func(x);
-      for (int i = 0; i < need.Count(); i++) 
+      for (int i = 0; i < need.Count(); i++)
         if (need[i]) res.Add(f[i]);
-      
+
       return res.ToArray();
     }
     private double[] func(double[] x) {
-      return new double[] { 1.0, x[0], x[1], x[2], x[0] * x[1], x[0] * x[2], x[1] * x[2]};//, x[0] * x[0], x[1] * x[1], x[2] * x[2] };
+      return new double[] { 1.0, x[0], x[1], x[2], x[0] * x[1], x[0] * x[2], x[1] * x[2] };//, x[0] * x[0], x[1] * x[1], x[2] * x[2] };
     }
-    
+
     private Matrix genX(int n, int m, bool[] need) {
       Matrix ret = new Matrix(n, m);
       for (int j = 0; j < n; j++) {
@@ -49,7 +49,7 @@ namespace smad5.src.labs {
       return ret;
     }
     public void GenerateData(Form1 form) {
-      
+      /*
       double[] X1 = new double[]{80, 80, 75, 62, 62, 62, 62, 62, 58, 58, 58, 58, 58, 58, 50, 50, 50, 50, 50, 56, 70};
       double[] X2 = new double[]{27, 27, 25, 24, 22, 23, 24, 24, 23, 18, 18, 17, 18, 19, 18, 18, 19, 19, 20, 20, 20};
       double[] X3 = new double[]{89, 88, 90, 87, 87, 87, 93, 93, 87, 80, 89, 88, 82, 93, 89, 86, 72, 79, 80, 82, 91};
@@ -211,6 +211,7 @@ namespace smad5.src.labs {
         form.richTextBox1.Text += diffsY[i].ToString() + Environment.NewLine;
 
     }
-
+      */
+    }
   }
 }

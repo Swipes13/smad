@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Collections;
 
 namespace smad5.src.math {
-  class Matrix {
+  public class Matrix {
     private double[,] matrix;
     private MatrixQ matrixq;
 
