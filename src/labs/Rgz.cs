@@ -14,6 +14,19 @@ using TettaRSS = smad5.src.labs.Lab6.TettaRSS;
 namespace smad5.src.labs {
 
   public class Rgz {
+    public struct AutoCorellation {
+      public double DW;
+      public double dHa;
+    }
+    public AutoCorellation ForAutoCor = new AutoCorellation();
+    public struct Geterescedestic {
+      public double ESS;
+      public double ESSChi;
+      public double alpha;
+      public double FDistr;
+      public double Rss2Rss1;
+    } 
+    public Geterescedestic ForGeter = new Geterescedestic();
     public struct MultiCollinear {
       public double DetXTXTrace;
       public double MinLambda;
@@ -22,33 +35,56 @@ namespace smad5.src.labs {
       public double MaxConjugation;
     }
     public MultiCollinear ForMultCol = new MultiCollinear();
-    
+    public class OptimalModel {
+      public OptimalModel() {
+        RealX = new List<List<int>>();
+        LabelsX = new List<string>();
+        TettaRss = new List<TettaRSS>();
+        Mellous = new List<double>();
+        ManyKrit = new List<double>();
+        MSEP = new List<double>();
+        AEV = new List<double>();
+        Functions = new List<bool[]>();
+        DiffsY = new List<double>();
+        AllFCrits = new List<List<KeyValuePair<int, double>>>();
+      }
+      public void Clear() {
+        TettaRss.Clear();
+        Mellous.Clear();
+        ManyKrit.Clear();
+        MSEP.Clear();
+        AEV.Clear();
+        Functions.Clear();
+        DiffsY.Clear();
+        AllFCrits.Clear();
+      }
+      public List<List<int>> RealX;
+      public List<String> LabelsX;
+      public List<TettaRSS> TettaRss;
+      public List<double> Mellous;
+      public List<double> ManyKrit;
+      public List<double> MSEP;
+      public List<double> AEV;
+      public List<bool[]> Functions;
+      public List<double> DiffsY;
+      public List<List<KeyValuePair<int, double>>> AllFCrits;
+    }
+    public OptimalModel ForOptMdl = new OptimalModel();
+
+    public Rgz() { ForGeter.alpha = 0.05; }
+
     public enum OptimalModelAlgorithm { Insertion, Exception }
     enum Field { Unit, Linear, LinearCollision, Quad }
     Field[] _fields;
-    public List<List<int>> _realX = new List<List<int>>();
-    public List<String> _labelsX = new List<string>();
-    public List<TettaRSS> _tettaRss = new List<TettaRSS>();
+
     public List<Point> Data = new List<Point>();
     Matrix _Y;
+    Matrix _X;
+    TettaRSS _TettaEst;
+    Matrix _eEst;
+    public bool Initialized { get { return _initialized; } private set { } }
     bool _initialized = false;
-    public List<double> _mellous = new List<double>();
-    public List<double> _manyKrit = new List<double>();
-    public List<double> _mSEP = new List<double>();
-    public List<double> _aEV = new List<double>();
-    public List<bool[]> _functions = new List<bool[]>();
-    public List<double> _diffsY = new List<double>();
-    public List<Dictionary<int, double>> _allFCrits = new List<Dictionary<int, double>>();
-    private void clearAllLists() {
-      _tettaRss.Clear();
-      _mellous.Clear();
-      _manyKrit.Clear();
-      _mSEP.Clear();
-      _aEV.Clear();
-      _functions.Clear();
-      _diffsY.Clear();
-      _allFCrits.Clear();
-    }
+
     private List<bool> _trueFunc = new List<bool>();
 
     delegate double[] fullFunction(double[] point);
@@ -62,8 +98,6 @@ namespace smad5.src.labs {
       return res.ToArray();
     }
 
-    public bool Initialized { get { return _initialized; } private set { } }
-   
     public void SetLinearTrueFunc() {
       _trueFunc.Clear();
       for (int i = 0; i < _fields.Count(); i++) {
@@ -102,6 +136,7 @@ namespace smad5.src.labs {
       Data.Clear();
       try {
         StreamReader sr = new StreamReader(filename);
+        int index = 0;
         while (!sr.EndOfStream) {
           var line = sr.ReadLine();
           var lines = line.Split(new char[] { '\t', ' ' });
@@ -114,6 +149,7 @@ namespace smad5.src.labs {
             point[i] = Convert.ToSingle(linaeList[i].Replace('.',','));
 
           Data.Add(new Point(point, Convert.ToSingle(linaeList.Last().Replace('.', ','))));
+          index++;
         }
         sr.Close();
         _initialized = true;
@@ -142,20 +178,20 @@ namespace smad5.src.labs {
     private void makeFields() {
       List<Field> flds = new List<Field>();
       flds.Add(Field.Unit);
-      _labelsX.Add("1");
-      _realX.Add(new List<int>());
+      ForOptMdl.LabelsX.Add("1");
+      ForOptMdl.RealX.Add(new List<int>());
       for (int i = 0; i < Data.First().X.Count(); i++) {
         flds.Add(Field.Linear);
         var q = new List<int>();
         q.Add(i);
-        _realX.Add(q);
-        _labelsX.Add("X" + (i + 1).ToString());
+        ForOptMdl.RealX.Add(q);
+        ForOptMdl.LabelsX.Add("X" + (i + 1).ToString());
         for (int j = i; j < Data.First().X.Count(); j++) {
           var qw = new List<int>();
           qw.Add(i); qw.Add(j);
-          _realX.Add(qw);
-          if (i == j) { flds.Add(Field.Quad); _labelsX.Add("X" + (i + 1).ToString() + "^2"); }
-          else { flds.Add(Field.LinearCollision); _labelsX.Add("X" + (i + 1).ToString() + "*" + "X" + (j + 1).ToString()); }
+          ForOptMdl.RealX.Add(qw);
+          if (i == j) { flds.Add(Field.Quad); ForOptMdl.LabelsX.Add("X" + (i + 1).ToString() + "^2"); }
+          else { flds.Add(Field.LinearCollision); ForOptMdl.LabelsX.Add("X" + (i + 1).ToString() + "*" + "X" + (j + 1).ToString()); }
         }
       }
       _fields = flds.ToArray();
@@ -175,8 +211,8 @@ namespace smad5.src.labs {
       double[][] data = new double[Data.Count][];
       for (int i = 0; i < Data.Count; i++) {
         double mul = 1.0;
-        for(int j=0; j<_realX[ind].Count();j++) 
-          mul *= Data[i].X[_realX[ind][j]];
+        for (int j = 0; j < ForOptMdl.RealX[ind].Count(); j++)
+          mul *= Data[i].X[ForOptMdl.RealX[ind][j]];
         data[i] = new double[] { mul, Data[i].Y };
       }
       var dList = data.OrderBy(x => x[0]).ToList();
@@ -210,8 +246,9 @@ namespace smad5.src.labs {
       if (!_initialized) return;
       int n = Data.Count; 
       int m = 0; foreach (bool b in _trueFunc) if (b) m++;
-      var X = generateX(n, m, _trueFunc.ToArray());
-      var XTX = X.Transpose() * X;
+      _X = generateX(n, m, _trueFunc.ToArray());
+      _TettaEst = TettaRSS.Compute(_X,_Y);
+      var XTX = _X.Transpose() * _X;
 
       var XTXTrace = XTX * 1/XTX.Trace();
       ForMultCol.DetXTXTrace = XTXTrace.Determinant();
@@ -225,9 +262,9 @@ namespace smad5.src.labs {
         for (int i = 0; i < m; i++) {
           double sum_up = 0.0, sum_d1 = 0.0, sum_d2 = 0.0;
           for (int k = 0; k < n; k++) {
-            sum_up += X[k, i] * X[k, j];
-            sum_d1 += X[k, i] * X[k, i];
-            sum_d2 += X[k, j] * X[k, j];
+            sum_up += _X[k, i] * _X[k, j];
+            sum_d1 += _X[k, i] * _X[k, i];
+            sum_d2 += _X[k, j] * _X[k, j];
           }
           double rij = sum_up / (Math.Sqrt(sum_d1) * Math.Sqrt(sum_d2));
           if (i != j && Math.Abs(rij) > r_max)
@@ -247,11 +284,26 @@ namespace smad5.src.labs {
       }
       ForMultCol.MaxConjugation = r_max;
     }
-    public void CheckGeteroskedastic() { }
-    public void CheckAutoCorellation() { }
+    public void CheckGeteroskedastic() {
+      if (!_initialized) return;
+      int n = Data.Count;
+      int m = 0; foreach (bool b in _trueFunc) if (b) m++;
+      breuschPaganTest(n, m);
+      goldfeldKvandton(n, m);
+    }
+    public void CheckAutoCorellation() {
+      if (!_initialized) return;
+      int n = Data.Count;
+      double up = 0.0;
+      double down = _eEst[0,0];
+      for (int i = 1; i < n; i++) {
+        down += Math.Pow(_eEst[i, 0],2.0);
+        up += Math.Pow(_eEst[i, 0] - _eEst[i-1, 0], 2.0);
+      }
+      ForAutoCor.DW = up / down;    }
     public void GenerateOptimalModel(OptimalModelAlgorithm alg) {
       if (!_initialized) return;
-      clearAllLists();
+      ForOptMdl.Clear();
       // По анализу полей
       SetLinearWithCollisionsTrueFunc();
 
@@ -282,7 +334,7 @@ namespace smad5.src.labs {
       for (int i = 0; i < fullM - 1; i++) {
         TettaRSS tettaRssBefore = TettaRSS.Compute(generateX(n, m, needFunc), _Y);
         computeAllKrits(n, m, fullR2, sigma2, tettaRssBefore);
-        _functions.Add(needFunc.ToArray());
+        ForOptMdl.Functions.Add(needFunc.ToArray());
 
         Dictionary<int, double> FCrit = new Dictionary<int, double>();
         var nu2 = n - m - 1; double nu2_nu1 = ((double)nu2 / (double)nu1);
@@ -297,11 +349,12 @@ namespace smad5.src.labs {
           var fCrit = nu2_nu1 * (tettaRssBefore.Rss - newTettaRss.Rss) / newTettaRss.Rss;
           FCrit.Add(index, fCrit);
         }
+        ForOptMdl.AllFCrits.Add(FCrit.ToList());
         var sorted = FCrit.OrderByDescending(x => x.Value).ToList();
         m++; needFunc[sorted[0].Key] = true;
       }
       computeAllKrits(n, m, fullR2, sigma2, TettaRSS.Compute(generateX(n, m, needFunc), _Y));
-      _functions.Add(needFunc.ToArray());
+      ForOptMdl.Functions.Add(needFunc.ToArray());
     }
     private void exceptionAlgorithm(int n, int fullM, double fullR2, double sigma2) {
       bool[] needFunc = new bool[_trueFunc.Count];
@@ -314,7 +367,7 @@ namespace smad5.src.labs {
 
         TettaRSS tettaRssBefore = TettaRSS.Compute(generateX(n, m, needFunc), _Y);
         computeAllKrits(n, m, fullR2, sigma2, tettaRssBefore);
-        _functions.Add(needFunc.ToArray());
+        ForOptMdl.Functions.Add(needFunc.ToArray());
 
         for (int q = fullM - m, index = 0, newM = m - 1; q < fullM; q++, index++) {
           var newNeedToAdd = new bool[_trueFunc.Count];
@@ -326,30 +379,102 @@ namespace smad5.src.labs {
           var fCrit = nu2_nu1 * (newTettaRss.Rss - tettaRssBefore.Rss) / newTettaRss.Rss;
           FCrit.Add(index, fCrit);
         }
+        ForOptMdl.AllFCrits.Add(FCrit.ToList());
         var sorted = FCrit.OrderBy(x => x.Value).ToList();
         m--; needFunc[sorted[0].Key] = false;
       }
       computeAllKrits(n, m, fullR2, sigma2, TettaRSS.Compute(generateX(n, m, needFunc), _Y));
-      _functions.Add(needFunc.ToArray());
+      ForOptMdl.Functions.Add(needFunc.ToArray());
     }
     private void computeAllKrits(int n, int m, double fullR2, double sigma2, TettaRSS tettaRss) {
-      _tettaRss.Add(tettaRss);
-      _mellous.Add(tettaRss.Rss / sigma2 + 2.0 * m - n);
+      ForOptMdl.TettaRss.Add(tettaRss);
+      ForOptMdl.Mellous.Add(tettaRss.Rss / sigma2 + 2.0 * m - n);
 
       double newR2 = calcR2(tettaRss.Y, n);
-      _manyKrit.Add(newR2 / fullR2);
+      ForOptMdl.ManyKrit.Add(newR2 / fullR2);
 
       var msep = tettaRss.Rss / (n * (n - m)) * (1 + n + m * (n + 1) / (n - m - 2));
-      _mSEP.Add(msep);
+      ForOptMdl.MSEP.Add(msep);
       var aev = tettaRss.Rss * m / (n * (n - m));
-      _aEV.Add(aev);
+      ForOptMdl.AEV.Add(aev);
 
       var fullSum = 0.0;
       for (int d = 0; d < n; d++) {
         var dif = Math.Abs(_Y[d][0, 0] - tettaRss.Y[d][0, 0]);
         fullSum += dif;
       }
-      _diffsY.Add(fullSum);
+      ForOptMdl.DiffsY.Add(fullSum);
     }
-  }
+    private void breuschPaganTest(int n, int m) {
+      _eEst = _Y - _TettaEst.Y;
+      double sigmaNew2 = _TettaEst.Rss / (double)(n - m);
+
+      Matrix Ct = new Matrix(n);
+      double cSR = 0;
+      for (int i = 0; i < n; i++) {
+        Ct[i, 0] = Math.Pow(_eEst[i, 0], 2.0) * lenghtToCenter(Data, i) / sigmaNew2;
+        cSR += Ct[i, 0];
+      } cSR /= n;
+
+      Matrix Z = new Matrix(n, 2);
+      for (int i = 0; i < n; i++) {
+        Z[i, 0] = 1;
+        Z[i, 1] = lenghtToCenter(Data, i);
+      }
+
+      Matrix alphaNew = Matrix.MNK(Z,Ct);
+      Matrix Cnew = alphaNew.Transpose() * Z.Transpose();
+      Matrix CnewT = Cnew.Transpose();
+
+      ForGeter.ESS = 0;
+      for (int i = 0; i < n; i++)
+        ForGeter.ESS += Math.Pow(CnewT[i, 0] - cSR, 2.0);
+
+      ForGeter.ESS /= 2.0;
+      ForGeter.ESSChi = alglib.invchisquaredistribution(1.0, ForGeter.alpha);
+    }
+    private void goldfeldKvandton(int n, int m) {
+      List<KeyValuePair<double, Point>> dataCopy = new List<KeyValuePair<double, Point>>();
+      for (int i = 0; i < n; i++)
+        dataCopy.Add(new KeyValuePair<double, Point>(lenghtToCenter(Data, i), Data[i]));
+      var dataSort = dataCopy.OrderBy(x => x.Key).ToList();
+
+      int n_c = n / 3;
+      int n_new = n - n_c;
+      Matrix XSort1 = new Matrix(n_new, m);
+      Matrix XSort2 = new Matrix(n_new, m);
+      Matrix YSort1 = new Matrix(n_new, 1);
+      Matrix YSort2 = new Matrix(n_new, 1);
+      for (int i = 0; i < n_c; i++) {
+        var point1 = dataSort[i].Value.X;
+        var point2 = dataSort[n_new + i].Value.X;
+        double[] f1 = calcF(point1, _trueFunc.ToArray());
+        double[] f2 = calcF(point2, _trueFunc.ToArray());
+        XSort1[i] = new Matrix(m, f1);
+        XSort2[i] = new Matrix(m, f2);
+        YSort1[i, 0] = dataSort[i].Value.Y;
+        YSort2[i, 0] = dataSort[n_new + i].Value.Y;
+      }
+      var rss1 = Matrix.RSS(XSort1, YSort1, Matrix.MNK(XSort1, YSort1));
+      var rss2 = Matrix.RSS(XSort1, YSort1, Matrix.MNK(XSort2, YSort2));
+
+      ForGeter.FDistr = alglib.invfdistribution(n - n_c - 2 * m, n - n_c - 2 * m, ForGeter.alpha);
+      ForGeter.Rss2Rss1 = rss2 / rss1;
+    }
+    private double lenghtToCenter(List<Point> data, int index){
+      List<double> xCntr = new List<double>();
+      for (int i = 0; i < data.First().X.Count(); i++)
+        xCntr.Add(0.0);
+      for (int i = 0; i < data.Count; i++) 
+        for (int j = 0; j < data[i].X.Count(); j++)
+          xCntr[j] += data[i].X[j];
+
+      for (int i = 0; i < xCntr.Count; i++)
+        xCntr[i] /= data.Count;
+
+      double sum = 0.0;
+      for (int i = 0; i < xCntr.Count; i++)
+        sum += Math.Pow(xCntr[i] - data[index].X[i], 2.0);
+      return Math.Sqrt(sum);
+    }  }
 }

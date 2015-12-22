@@ -33,8 +33,8 @@ namespace smad5 {
     }
     private void fillRss(RichTextBox rtb) {
       rtb.Text = "";
-      for (int i = 0; i < rgz._tettaRss.Count; i++)
-        rtb.Text += rgz._tettaRss[i].Rss.ToString() + _ns;
+      for (int i = 0; i < rgz.ForOptMdl.TettaRss.Count; i++)
+        rtb.Text += rgz.ForOptMdl.TettaRss[i].Rss.ToString() + _ns;
       rtb.Text += _ns;
     }
     private void fillKrit(RichTextBox rtb,List<double> krit) {
@@ -43,26 +43,26 @@ namespace smad5 {
       rtb.Text += _ns;
     }
     private void fillLog() {
-      for (int i = 0; i < rgz._mellous.Count; i++) {
-        for (int j = 0; j < rgz._functions[i].Count(); j++)
-          rtbLog.Text += rgz._labelsX[j] + _tb;
+      for (int i = 0; i < rgz.ForOptMdl.Mellous.Count; i++) {
+        for (int j = 0; j < rgz.ForOptMdl.Functions[i].Count(); j++)
+          rtbLog.Text += rgz.ForOptMdl.LabelsX[j] + _tb;
         rtbLog.Text += _ns;
 
-        for (int j = 0; j < rgz._functions[i].Count(); j++) 
-          rtbLog.Text += rgz._functions[i][j].ToString() + _tb;
+        for (int j = 0; j < rgz.ForOptMdl.Functions[i].Count(); j++)
+          rtbLog.Text += rgz.ForOptMdl.Functions[i][j].ToString() + _tb;
         
         rtbLog.Text += _ns;
 
         rtbLog.Text += "RSS" + _tb;
-        rtbLog.Text += rgz._tettaRss[i].Rss.ToString() + _ns;
+        rtbLog.Text += rgz.ForOptMdl.TettaRss[i].Rss.ToString() + _ns;
         rtbLog.Text += "mellous" + _tb;
-        rtbLog.Text += rgz._mellous[i].ToString() + _ns;
+        rtbLog.Text += rgz.ForOptMdl.Mellous[i].ToString() + _ns;
         rtbLog.Text += "manyCrit" + _tb;
-        rtbLog.Text += rgz._manyKrit[i].ToString() + _ns;
+        rtbLog.Text += rgz.ForOptMdl.ManyKrit[i].ToString() + _ns;
         rtbLog.Text += "MSEP" + _tb;
-        rtbLog.Text += rgz._mSEP[i].ToString() + _ns;
+        rtbLog.Text += rgz.ForOptMdl.MSEP[i].ToString() + _ns;
         rtbLog.Text += "AEV" + _tb;
-        rtbLog.Text += rgz._aEV[i].ToString() + _ns;
+        rtbLog.Text += rgz.ForOptMdl.AEV[i].ToString() + _ns;
         rtbLog.Text += _ns;
 
         rtbLog.SelectionStart = rtbLog.Text.Length;
@@ -98,10 +98,10 @@ namespace smad5 {
     private void fillAllRtbs() {
       if (!rgz.Initialized) return;
       fillRss(rtbRSS);
-      fillKrit(rtbMellous, rgz._mellous);
-      fillKrit(rtbManyKrit, rgz._manyKrit);
-      fillKrit(rtbMsep, rgz._mSEP);
-      fillKrit(rtbAev, rgz._aEV);
+      fillKrit(rtbMellous, rgz.ForOptMdl.Mellous);
+      fillKrit(rtbManyKrit, rgz.ForOptMdl.ManyKrit);
+      fillKrit(rtbMsep, rgz.ForOptMdl.MSEP);
+      fillKrit(rtbAev, rgz.ForOptMdl.AEV);
     }
     private void setDataToolStripMenuItem_Click(object sender, EventArgs e) {
       OpenFileDialog ofd = new OpenFileDialog();
@@ -132,8 +132,8 @@ namespace smad5 {
     private void drawCorrelationFields(FlowLayoutPanel flp) {
       flp.Controls.Clear();
       int w = 230; int h = 200; int lSize = 18;
-      Size s = new Size(w, h); 
-      for (int i = 1; i < rgz._labelsX.Count; i++) {
+      Size s = new Size(w, h);
+      for (int i = 1; i < rgz.ForOptMdl.LabelsX.Count; i++) {
         Panel pnl = new Panel();
         
         pnl.Size = s;
@@ -145,7 +145,7 @@ namespace smad5 {
         pnl.Controls.Add(pbField);
 
         Label lbl = new Label();
-        lbl.Text = rgz._labelsX[i];
+        lbl.Text = rgz.ForOptMdl.LabelsX[i];
         lbl.AutoSize = false;
         lbl.Dock = DockStyle.Bottom;
         lbl.BackColor = Color.RoyalBlue;
@@ -185,9 +185,16 @@ namespace smad5 {
       else doRgzFill(OptimalModelAlgorithm.Exception);
       rtbLog.SelectionStart = rtbLog.Text.Length;
       rtbLog.ScrollToCaret();
+      fillFKrit();
 
       rgz.CheckMultiColliniar();
       fillMultiCollinear();
+
+      rgz.CheckGeteroskedastic();
+      fillHeteroskedastic();
+
+      rgz.CheckAutoCorellation();
+      fillAutoCorellation();
     }
     private void fillMultiCollinear() {
       rtbMC1.Text = rgz.ForMultCol.DetXTXTrace.ToString();
@@ -195,6 +202,63 @@ namespace smad5 {
       rtbMC3.Text = rgz.ForMultCol.NeimanGoldstein.ToString();
       rtbMC4.Text = rgz.ForMultCol.MaxPairConjugation.ToString();
       rtbMC5.Text = rgz.ForMultCol.MaxConjugation.ToString();
+    }
+    private void fillHeteroskedastic() {
+      rtbHeter.Text = "";
+      rtbHeter.Text += "alpha = " + rgz.ForGeter.alpha.ToString() + _ns;
+      rtbHeter.Text += "ESS_2 = " + rgz.ForGeter.ESS.ToString() + _ns;
+      rtbHeter.Text += "ESSChi = " + rgz.ForGeter.ESSChi.ToString() + _ns;
+      rtbHeter.Text += "FDistr = " + rgz.ForGeter.FDistr.ToString() + _ns;
+      rtbHeter.Text += "RSS2/RSS1 = " + rgz.ForGeter.Rss2Rss1.ToString() + _ns;
+
+      if (rgz.ForGeter.ESS < rgz.ForGeter.ESSChi)
+        rtbHeter.Text += _ns + "H of homo Accept";
+      else rtbHeter.Text += _ns + "H of homo Not accept";
+      
+      if (rgz.ForGeter.Rss2Rss1 < rgz.ForGeter.FDistr)
+        rtbHeter.Text += _ns + "H of homo Not rejected";
+      else rtbHeter.Text += _ns + "H of homo Rejected";
+
+    }
+    private void fillAutoCorellation() {
+      rtbAutoCor.Text = "";
+      rtbAutoCor.Text += "DW = " + rgz.ForAutoCor.DW.ToString() + _ns;
+      rtbAutoCor.Text += "dH_alpha = " + "????";//rgz.ForAutoCor.dHa.ToString() + _ns;
+
+      //if (rgz.ForAutoCor.DW < rgz.ForGeter.FDistr)
+       // rtbHeter.Text += _ns + "H of homo Not rejected";
+    }
+    private void fillFKrit() {
+      rtbFKrit.Text = "";
+
+      for (int i = 0; i < rgz.ForOptMdl.Mellous.Count; i++) {
+        for (int j = 0; j < rgz.ForOptMdl.Functions[i].Count(); j++)
+          rtbFKrit.Text += rgz.ForOptMdl.LabelsX[j] + _tb;
+        rtbFKrit.Text += _ns;
+
+        for (int j = 0; j < rgz.ForOptMdl.Functions[i].Count(); j++)
+          rtbFKrit.Text += rgz.ForOptMdl.Functions[i][j].ToString() + _tb;
+        rtbFKrit.Text += _ns;
+
+        if (i < rgz.ForOptMdl.Mellous.Count - 1) {
+          rtbFKrit.Text += "Fkrit:" + _ns;
+          foreach (var d in rgz.ForOptMdl.AllFCrits[i]) 
+            rtbFKrit.Text += (d.Key).ToString() + _tb + (d.Value).ToString() + _ns;
+        }
+
+        rtbFKrit.Text += "RSS" + _tb;
+        rtbFKrit.Text += rgz.ForOptMdl.TettaRss[i].Rss.ToString() + _ns;
+        rtbFKrit.Text += "mellous" + _tb;
+        rtbFKrit.Text += rgz.ForOptMdl.Mellous[i].ToString() + _ns;
+        rtbFKrit.Text += "manyCrit" + _tb;
+        rtbFKrit.Text += rgz.ForOptMdl.ManyKrit[i].ToString() + _ns;
+        rtbFKrit.Text += "MSEP" + _tb;
+        rtbFKrit.Text += rgz.ForOptMdl.MSEP[i].ToString() + _ns;
+        rtbFKrit.Text += "AEV" + _tb;
+        rtbFKrit.Text += rgz.ForOptMdl.AEV[i].ToString() + _ns;
+        rtbFKrit.Text += _ns;
+
+      }
     }
   }
 }

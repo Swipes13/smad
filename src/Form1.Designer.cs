@@ -33,10 +33,27 @@
       this.tabPage5 = new System.Windows.Forms.TabPage();
       this.flpFields = new System.Windows.Forms.FlowLayoutPanel();
       this.tabPage3 = new System.Windows.Forms.TabPage();
+      this.btnCalc = new System.Windows.Forms.Button();
       this.panel7 = new System.Windows.Forms.Panel();
       this.cmbOptimalModel = new System.Windows.Forms.ComboBox();
       this.label7 = new System.Windows.Forms.Label();
       this.tabPage6 = new System.Windows.Forms.TabPage();
+      this.panel8 = new System.Windows.Forms.Panel();
+      this.panel9 = new System.Windows.Forms.Panel();
+      this.rtbMC1 = new System.Windows.Forms.RichTextBox();
+      this.label8 = new System.Windows.Forms.Label();
+      this.panel10 = new System.Windows.Forms.Panel();
+      this.rtbMC5 = new System.Windows.Forms.RichTextBox();
+      this.label9 = new System.Windows.Forms.Label();
+      this.panel11 = new System.Windows.Forms.Panel();
+      this.rtbMC2 = new System.Windows.Forms.RichTextBox();
+      this.label10 = new System.Windows.Forms.Label();
+      this.panel12 = new System.Windows.Forms.Panel();
+      this.rtbMC4 = new System.Windows.Forms.RichTextBox();
+      this.label11 = new System.Windows.Forms.Label();
+      this.panel13 = new System.Windows.Forms.Panel();
+      this.rtbMC3 = new System.Windows.Forms.RichTextBox();
+      this.label12 = new System.Windows.Forms.Label();
       this.tabPage7 = new System.Windows.Forms.TabPage();
       this.tabPage8 = new System.Windows.Forms.TabPage();
       this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -66,23 +83,15 @@
       this.setDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-      this.btnCalc = new System.Windows.Forms.Button();
-      this.panel8 = new System.Windows.Forms.Panel();
-      this.panel9 = new System.Windows.Forms.Panel();
-      this.rtbMC1 = new System.Windows.Forms.RichTextBox();
-      this.label8 = new System.Windows.Forms.Label();
-      this.panel10 = new System.Windows.Forms.Panel();
-      this.rtbMC5 = new System.Windows.Forms.RichTextBox();
-      this.label9 = new System.Windows.Forms.Label();
-      this.panel11 = new System.Windows.Forms.Panel();
-      this.rtbMC2 = new System.Windows.Forms.RichTextBox();
-      this.label10 = new System.Windows.Forms.Label();
-      this.panel12 = new System.Windows.Forms.Panel();
-      this.rtbMC4 = new System.Windows.Forms.RichTextBox();
-      this.label11 = new System.Windows.Forms.Label();
-      this.panel13 = new System.Windows.Forms.Panel();
-      this.rtbMC3 = new System.Windows.Forms.RichTextBox();
-      this.label12 = new System.Windows.Forms.Label();
+      this.panel14 = new System.Windows.Forms.Panel();
+      this.rtbHeter = new System.Windows.Forms.RichTextBox();
+      this.label13 = new System.Windows.Forms.Label();
+      this.panel15 = new System.Windows.Forms.Panel();
+      this.rtbAutoCor = new System.Windows.Forms.RichTextBox();
+      this.label14 = new System.Windows.Forms.Label();
+      this.panel16 = new System.Windows.Forms.Panel();
+      this.rtbFKrit = new System.Windows.Forms.RichTextBox();
+      this.label15 = new System.Windows.Forms.Label();
       this.panel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.spcntMain)).BeginInit();
       this.spcntMain.Panel1.SuspendLayout();
@@ -95,6 +104,15 @@
       this.tabPage3.SuspendLayout();
       this.panel7.SuspendLayout();
       this.tabPage6.SuspendLayout();
+      this.panel8.SuspendLayout();
+      this.panel9.SuspendLayout();
+      this.panel10.SuspendLayout();
+      this.panel11.SuspendLayout();
+      this.panel12.SuspendLayout();
+      this.panel13.SuspendLayout();
+      this.tabPage7.SuspendLayout();
+      this.tabPage8.SuspendLayout();
+      this.tabPage4.SuspendLayout();
       this.tabPage2.SuspendLayout();
       this.panel6.SuspendLayout();
       this.pnlRSS.SuspendLayout();
@@ -103,12 +121,9 @@
       this.panel4.SuspendLayout();
       this.panel3.SuspendLayout();
       this.menuStrip1.SuspendLayout();
-      this.panel8.SuspendLayout();
-      this.panel9.SuspendLayout();
-      this.panel10.SuspendLayout();
-      this.panel11.SuspendLayout();
-      this.panel12.SuspendLayout();
-      this.panel13.SuspendLayout();
+      this.panel14.SuspendLayout();
+      this.panel15.SuspendLayout();
+      this.panel16.SuspendLayout();
       this.SuspendLayout();
       // 
       // panel2
@@ -233,6 +248,16 @@
       this.tabPage3.Text = "Calculations";
       this.tabPage3.UseVisualStyleBackColor = true;
       // 
+      // btnCalc
+      // 
+      this.btnCalc.Location = new System.Drawing.Point(43, 41);
+      this.btnCalc.Name = "btnCalc";
+      this.btnCalc.Size = new System.Drawing.Size(142, 23);
+      this.btnCalc.TabIndex = 1;
+      this.btnCalc.Text = "Calculate";
+      this.btnCalc.UseVisualStyleBackColor = true;
+      this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+      // 
       // panel7
       // 
       this.panel7.Controls.Add(this.cmbOptimalModel);
@@ -276,8 +301,179 @@
       this.tabPage6.Text = "Multicollinearity";
       this.tabPage6.UseVisualStyleBackColor = true;
       // 
+      // panel8
+      // 
+      this.panel8.AutoScroll = true;
+      this.panel8.BackColor = System.Drawing.Color.Gainsboro;
+      this.panel8.Controls.Add(this.panel9);
+      this.panel8.Controls.Add(this.panel10);
+      this.panel8.Controls.Add(this.panel11);
+      this.panel8.Controls.Add(this.panel12);
+      this.panel8.Controls.Add(this.panel13);
+      this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.panel8.Location = new System.Drawing.Point(0, 0);
+      this.panel8.Name = "panel8";
+      this.panel8.Size = new System.Drawing.Size(736, 249);
+      this.panel8.TabIndex = 6;
+      // 
+      // panel9
+      // 
+      this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel9.Controls.Add(this.rtbMC1);
+      this.panel9.Controls.Add(this.label8);
+      this.panel9.Location = new System.Drawing.Point(14, 3);
+      this.panel9.Name = "panel9";
+      this.panel9.Size = new System.Drawing.Size(140, 243);
+      this.panel9.TabIndex = 0;
+      // 
+      // rtbMC1
+      // 
+      this.rtbMC1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbMC1.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbMC1.Location = new System.Drawing.Point(0, 34);
+      this.rtbMC1.Name = "rtbMC1";
+      this.rtbMC1.Size = new System.Drawing.Size(140, 209);
+      this.rtbMC1.TabIndex = 10;
+      this.rtbMC1.Text = "";
+      // 
+      // label8
+      // 
+      this.label8.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label8.Location = new System.Drawing.Point(0, 0);
+      this.label8.Name = "label8";
+      this.label8.Size = new System.Drawing.Size(140, 34);
+      this.label8.TabIndex = 11;
+      this.label8.Text = "det|XTX/trace|";
+      this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // panel10
+      // 
+      this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel10.Controls.Add(this.rtbMC5);
+      this.panel10.Controls.Add(this.label9);
+      this.panel10.Location = new System.Drawing.Point(578, 3);
+      this.panel10.Name = "panel10";
+      this.panel10.Size = new System.Drawing.Size(140, 243);
+      this.panel10.TabIndex = 4;
+      // 
+      // rtbMC5
+      // 
+      this.rtbMC5.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbMC5.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbMC5.Location = new System.Drawing.Point(0, 34);
+      this.rtbMC5.Name = "rtbMC5";
+      this.rtbMC5.Size = new System.Drawing.Size(140, 209);
+      this.rtbMC5.TabIndex = 10;
+      this.rtbMC5.Text = "";
+      // 
+      // label9
+      // 
+      this.label9.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label9.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label9.Location = new System.Drawing.Point(0, 0);
+      this.label9.Name = "label9";
+      this.label9.Size = new System.Drawing.Size(140, 34);
+      this.label9.TabIndex = 11;
+      this.label9.Text = "Max conjugation";
+      this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // panel11
+      // 
+      this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel11.Controls.Add(this.rtbMC2);
+      this.panel11.Controls.Add(this.label10);
+      this.panel11.Location = new System.Drawing.Point(155, 3);
+      this.panel11.Name = "panel11";
+      this.panel11.Size = new System.Drawing.Size(140, 243);
+      this.panel11.TabIndex = 1;
+      // 
+      // rtbMC2
+      // 
+      this.rtbMC2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbMC2.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbMC2.Location = new System.Drawing.Point(0, 34);
+      this.rtbMC2.Name = "rtbMC2";
+      this.rtbMC2.Size = new System.Drawing.Size(140, 209);
+      this.rtbMC2.TabIndex = 10;
+      this.rtbMC2.Text = "";
+      // 
+      // label10
+      // 
+      this.label10.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label10.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label10.Location = new System.Drawing.Point(0, 0);
+      this.label10.Name = "label10";
+      this.label10.Size = new System.Drawing.Size(140, 34);
+      this.label10.TabIndex = 11;
+      this.label10.Text = "minLam(XTX)";
+      this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // panel12
+      // 
+      this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel12.Controls.Add(this.rtbMC4);
+      this.panel12.Controls.Add(this.label11);
+      this.panel12.Location = new System.Drawing.Point(437, 3);
+      this.panel12.Name = "panel12";
+      this.panel12.Size = new System.Drawing.Size(140, 243);
+      this.panel12.TabIndex = 3;
+      // 
+      // rtbMC4
+      // 
+      this.rtbMC4.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbMC4.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbMC4.Location = new System.Drawing.Point(0, 34);
+      this.rtbMC4.Name = "rtbMC4";
+      this.rtbMC4.Size = new System.Drawing.Size(140, 209);
+      this.rtbMC4.TabIndex = 10;
+      this.rtbMC4.Text = "";
+      // 
+      // label11
+      // 
+      this.label11.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label11.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label11.Location = new System.Drawing.Point(0, 0);
+      this.label11.Name = "label11";
+      this.label11.Size = new System.Drawing.Size(140, 34);
+      this.label11.TabIndex = 11;
+      this.label11.Text = "Max pair conjugation";
+      this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // panel13
+      // 
+      this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel13.Controls.Add(this.rtbMC3);
+      this.panel13.Controls.Add(this.label12);
+      this.panel13.Location = new System.Drawing.Point(296, 3);
+      this.panel13.Name = "panel13";
+      this.panel13.Size = new System.Drawing.Size(140, 243);
+      this.panel13.TabIndex = 2;
+      // 
+      // rtbMC3
+      // 
+      this.rtbMC3.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbMC3.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbMC3.Location = new System.Drawing.Point(0, 34);
+      this.rtbMC3.Name = "rtbMC3";
+      this.rtbMC3.Size = new System.Drawing.Size(140, 209);
+      this.rtbMC3.TabIndex = 10;
+      this.rtbMC3.Text = "";
+      // 
+      // label12
+      // 
+      this.label12.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label12.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label12.Location = new System.Drawing.Point(0, 0);
+      this.label12.Name = "label12";
+      this.label12.Size = new System.Drawing.Size(140, 34);
+      this.label12.TabIndex = 11;
+      this.label12.Text = "Neiman-Goldstein number";
+      this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
       // tabPage7
       // 
+      this.tabPage7.Controls.Add(this.panel14);
       this.tabPage7.Location = new System.Drawing.Point(4, 22);
       this.tabPage7.Name = "tabPage7";
       this.tabPage7.Size = new System.Drawing.Size(736, 249);
@@ -287,6 +483,7 @@
       // 
       // tabPage8
       // 
+      this.tabPage8.Controls.Add(this.panel15);
       this.tabPage8.Location = new System.Drawing.Point(4, 22);
       this.tabPage8.Name = "tabPage8";
       this.tabPage8.Size = new System.Drawing.Size(736, 249);
@@ -296,6 +493,7 @@
       // 
       // tabPage4
       // 
+      this.tabPage4.Controls.Add(this.panel16);
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
       this.tabPage4.Size = new System.Drawing.Size(736, 249);
@@ -568,185 +766,98 @@
       this.logToolStripMenuItem.Text = "Log";
       this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
       // 
-      // btnCalc
+      // panel14
       // 
-      this.btnCalc.Location = new System.Drawing.Point(43, 41);
-      this.btnCalc.Name = "btnCalc";
-      this.btnCalc.Size = new System.Drawing.Size(142, 23);
-      this.btnCalc.TabIndex = 1;
-      this.btnCalc.Text = "Calculate";
-      this.btnCalc.UseVisualStyleBackColor = true;
-      this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+      this.panel14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel14.Controls.Add(this.rtbHeter);
+      this.panel14.Controls.Add(this.label13);
+      this.panel14.Location = new System.Drawing.Point(273, 3);
+      this.panel14.Name = "panel14";
+      this.panel14.Size = new System.Drawing.Size(179, 243);
+      this.panel14.TabIndex = 3;
       // 
-      // panel8
+      // rtbHeter
       // 
-      this.panel8.AutoScroll = true;
-      this.panel8.BackColor = System.Drawing.Color.Gainsboro;
-      this.panel8.Controls.Add(this.panel9);
-      this.panel8.Controls.Add(this.panel10);
-      this.panel8.Controls.Add(this.panel11);
-      this.panel8.Controls.Add(this.panel12);
-      this.panel8.Controls.Add(this.panel13);
-      this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.panel8.Location = new System.Drawing.Point(0, 0);
-      this.panel8.Name = "panel8";
-      this.panel8.Size = new System.Drawing.Size(736, 249);
-      this.panel8.TabIndex = 6;
+      this.rtbHeter.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbHeter.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbHeter.Location = new System.Drawing.Point(0, 34);
+      this.rtbHeter.Name = "rtbHeter";
+      this.rtbHeter.Size = new System.Drawing.Size(179, 209);
+      this.rtbHeter.TabIndex = 10;
+      this.rtbHeter.Text = "";
       // 
-      // panel9
+      // label13
       // 
-      this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-      this.panel9.Controls.Add(this.rtbMC1);
-      this.panel9.Controls.Add(this.label8);
-      this.panel9.Location = new System.Drawing.Point(14, 3);
-      this.panel9.Name = "panel9";
-      this.panel9.Size = new System.Drawing.Size(140, 243);
-      this.panel9.TabIndex = 0;
+      this.label13.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label13.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label13.Location = new System.Drawing.Point(0, 0);
+      this.label13.Name = "label13";
+      this.label13.Size = new System.Drawing.Size(179, 34);
+      this.label13.TabIndex = 11;
+      this.label13.Text = "Heteroskedasticy";
+      this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // rtbMC1
+      // panel15
       // 
-      this.rtbMC1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.rtbMC1.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.rtbMC1.Location = new System.Drawing.Point(0, 34);
-      this.rtbMC1.Name = "rtbMC1";
-      this.rtbMC1.Size = new System.Drawing.Size(140, 209);
-      this.rtbMC1.TabIndex = 10;
-      this.rtbMC1.Text = "";
+      this.panel15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel15.Controls.Add(this.rtbAutoCor);
+      this.panel15.Controls.Add(this.label14);
+      this.panel15.Location = new System.Drawing.Point(279, 3);
+      this.panel15.Name = "panel15";
+      this.panel15.Size = new System.Drawing.Size(179, 243);
+      this.panel15.TabIndex = 4;
       // 
-      // label8
+      // rtbAutoCor
       // 
-      this.label8.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-      this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-      this.label8.Location = new System.Drawing.Point(0, 0);
-      this.label8.Name = "label8";
-      this.label8.Size = new System.Drawing.Size(140, 34);
-      this.label8.TabIndex = 11;
-      this.label8.Text = "det|XTX/trace|";
-      this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.rtbAutoCor.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbAutoCor.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbAutoCor.Location = new System.Drawing.Point(0, 34);
+      this.rtbAutoCor.Name = "rtbAutoCor";
+      this.rtbAutoCor.Size = new System.Drawing.Size(179, 209);
+      this.rtbAutoCor.TabIndex = 10;
+      this.rtbAutoCor.Text = "";
       // 
-      // panel10
+      // label14
       // 
-      this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-      this.panel10.Controls.Add(this.rtbMC5);
-      this.panel10.Controls.Add(this.label9);
-      this.panel10.Location = new System.Drawing.Point(578, 3);
-      this.panel10.Name = "panel10";
-      this.panel10.Size = new System.Drawing.Size(140, 243);
-      this.panel10.TabIndex = 4;
+      this.label14.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label14.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label14.Location = new System.Drawing.Point(0, 0);
+      this.label14.Name = "label14";
+      this.label14.Size = new System.Drawing.Size(179, 34);
+      this.label14.TabIndex = 11;
+      this.label14.Text = "Autocorrelation";
+      this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
-      // rtbMC5
+      // panel16
       // 
-      this.rtbMC5.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.rtbMC5.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.rtbMC5.Location = new System.Drawing.Point(0, 34);
-      this.rtbMC5.Name = "rtbMC5";
-      this.rtbMC5.Size = new System.Drawing.Size(140, 209);
-      this.rtbMC5.TabIndex = 10;
-      this.rtbMC5.Text = "";
+      this.panel16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
+      this.panel16.Controls.Add(this.rtbFKrit);
+      this.panel16.Controls.Add(this.label15);
+      this.panel16.Location = new System.Drawing.Point(8, 3);
+      this.panel16.Name = "panel16";
+      this.panel16.Size = new System.Drawing.Size(720, 243);
+      this.panel16.TabIndex = 5;
       // 
-      // label9
+      // rtbFKrit
       // 
-      this.label9.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-      this.label9.Dock = System.Windows.Forms.DockStyle.Top;
-      this.label9.Location = new System.Drawing.Point(0, 0);
-      this.label9.Name = "label9";
-      this.label9.Size = new System.Drawing.Size(140, 34);
-      this.label9.TabIndex = 11;
-      this.label9.Text = "Max conjugation";
-      this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.rtbFKrit.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.rtbFKrit.Dock = System.Windows.Forms.DockStyle.Fill;
+      this.rtbFKrit.Location = new System.Drawing.Point(0, 34);
+      this.rtbFKrit.Name = "rtbFKrit";
+      this.rtbFKrit.Size = new System.Drawing.Size(720, 209);
+      this.rtbFKrit.TabIndex = 10;
+      this.rtbFKrit.Text = "";
       // 
-      // panel11
+      // label15
       // 
-      this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-      this.panel11.Controls.Add(this.rtbMC2);
-      this.panel11.Controls.Add(this.label10);
-      this.panel11.Location = new System.Drawing.Point(155, 3);
-      this.panel11.Name = "panel11";
-      this.panel11.Size = new System.Drawing.Size(140, 243);
-      this.panel11.TabIndex = 1;
-      // 
-      // rtbMC2
-      // 
-      this.rtbMC2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.rtbMC2.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.rtbMC2.Location = new System.Drawing.Point(0, 34);
-      this.rtbMC2.Name = "rtbMC2";
-      this.rtbMC2.Size = new System.Drawing.Size(140, 209);
-      this.rtbMC2.TabIndex = 10;
-      this.rtbMC2.Text = "";
-      // 
-      // label10
-      // 
-      this.label10.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-      this.label10.Dock = System.Windows.Forms.DockStyle.Top;
-      this.label10.Location = new System.Drawing.Point(0, 0);
-      this.label10.Name = "label10";
-      this.label10.Size = new System.Drawing.Size(140, 34);
-      this.label10.TabIndex = 11;
-      this.label10.Text = "minLam(XTX)";
-      this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      // 
-      // panel12
-      // 
-      this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-      this.panel12.Controls.Add(this.rtbMC4);
-      this.panel12.Controls.Add(this.label11);
-      this.panel12.Location = new System.Drawing.Point(437, 3);
-      this.panel12.Name = "panel12";
-      this.panel12.Size = new System.Drawing.Size(140, 243);
-      this.panel12.TabIndex = 3;
-      // 
-      // rtbMC4
-      // 
-      this.rtbMC4.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.rtbMC4.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.rtbMC4.Location = new System.Drawing.Point(0, 34);
-      this.rtbMC4.Name = "rtbMC4";
-      this.rtbMC4.Size = new System.Drawing.Size(140, 209);
-      this.rtbMC4.TabIndex = 10;
-      this.rtbMC4.Text = "";
-      // 
-      // label11
-      // 
-      this.label11.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-      this.label11.Dock = System.Windows.Forms.DockStyle.Top;
-      this.label11.Location = new System.Drawing.Point(0, 0);
-      this.label11.Name = "label11";
-      this.label11.Size = new System.Drawing.Size(140, 34);
-      this.label11.TabIndex = 11;
-      this.label11.Text = "Max pair conjugation";
-      this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-      // 
-      // panel13
-      // 
-      this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
-      this.panel13.Controls.Add(this.rtbMC3);
-      this.panel13.Controls.Add(this.label12);
-      this.panel13.Location = new System.Drawing.Point(296, 3);
-      this.panel13.Name = "panel13";
-      this.panel13.Size = new System.Drawing.Size(140, 243);
-      this.panel13.TabIndex = 2;
-      // 
-      // rtbMC3
-      // 
-      this.rtbMC3.BorderStyle = System.Windows.Forms.BorderStyle.None;
-      this.rtbMC3.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.rtbMC3.Location = new System.Drawing.Point(0, 34);
-      this.rtbMC3.Name = "rtbMC3";
-      this.rtbMC3.Size = new System.Drawing.Size(140, 209);
-      this.rtbMC3.TabIndex = 10;
-      this.rtbMC3.Text = "";
-      // 
-      // label12
-      // 
-      this.label12.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
-      this.label12.Dock = System.Windows.Forms.DockStyle.Top;
-      this.label12.Location = new System.Drawing.Point(0, 0);
-      this.label12.Name = "label12";
-      this.label12.Size = new System.Drawing.Size(140, 34);
-      this.label12.TabIndex = 11;
-      this.label12.Text = "Neiman-Goldstein number";
-      this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      this.label15.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
+      this.label15.Dock = System.Windows.Forms.DockStyle.Top;
+      this.label15.Location = new System.Drawing.Point(0, 0);
+      this.label15.Name = "label15";
+      this.label15.Size = new System.Drawing.Size(720, 34);
+      this.label15.TabIndex = 11;
+      this.label15.Text = "Optimal model finding";
+      this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
       // 
       // Form1
       // 
@@ -771,6 +882,15 @@
       this.tabPage3.ResumeLayout(false);
       this.panel7.ResumeLayout(false);
       this.tabPage6.ResumeLayout(false);
+      this.panel8.ResumeLayout(false);
+      this.panel9.ResumeLayout(false);
+      this.panel10.ResumeLayout(false);
+      this.panel11.ResumeLayout(false);
+      this.panel12.ResumeLayout(false);
+      this.panel13.ResumeLayout(false);
+      this.tabPage7.ResumeLayout(false);
+      this.tabPage8.ResumeLayout(false);
+      this.tabPage4.ResumeLayout(false);
       this.tabPage2.ResumeLayout(false);
       this.panel6.ResumeLayout(false);
       this.pnlRSS.ResumeLayout(false);
@@ -780,12 +900,9 @@
       this.panel3.ResumeLayout(false);
       this.menuStrip1.ResumeLayout(false);
       this.menuStrip1.PerformLayout();
-      this.panel8.ResumeLayout(false);
-      this.panel9.ResumeLayout(false);
-      this.panel10.ResumeLayout(false);
-      this.panel11.ResumeLayout(false);
-      this.panel12.ResumeLayout(false);
-      this.panel13.ResumeLayout(false);
+      this.panel14.ResumeLayout(false);
+      this.panel15.ResumeLayout(false);
+      this.panel16.ResumeLayout(false);
       this.ResumeLayout(false);
 
     }
@@ -852,6 +969,15 @@
     private System.Windows.Forms.Panel panel13;
     private System.Windows.Forms.RichTextBox rtbMC3;
     private System.Windows.Forms.Label label12;
+    private System.Windows.Forms.Panel panel14;
+    private System.Windows.Forms.RichTextBox rtbHeter;
+    private System.Windows.Forms.Label label13;
+    private System.Windows.Forms.Panel panel15;
+    private System.Windows.Forms.RichTextBox rtbAutoCor;
+    private System.Windows.Forms.Label label14;
+    private System.Windows.Forms.Panel panel16;
+    private System.Windows.Forms.RichTextBox rtbFKrit;
+    private System.Windows.Forms.Label label15;
   }
 }
 
