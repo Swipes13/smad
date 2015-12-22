@@ -99,9 +99,23 @@ namespace smad5 {
       if (!rgz.Initialized) return;
       fillRss(rtbRSS);
       fillKrit(rtbMellous, rgz.ForOptMdl.Mellous);
+      writeFunc(rtbMellous, rgz.ForOptMdl.BestFMell);
       fillKrit(rtbManyKrit, rgz.ForOptMdl.ManyKrit);
+      writeFunc(rtbManyKrit, rgz.ForOptMdl.BestFR);
       fillKrit(rtbMsep, rgz.ForOptMdl.MSEP);
+      writeFunc(rtbMsep, rgz.ForOptMdl.BestFMSEP);
       fillKrit(rtbAev, rgz.ForOptMdl.AEV);
+      writeFunc(rtbAev, rgz.ForOptMdl.BestFAEV);
+      fillKrit(rtbE, rgz.ForOptMdl.E);
+      writeFunc(rtbE, rgz.ForOptMdl.BestFE);
+    }
+    private void writeFunc(RichTextBox rtb, List<bool> list) {
+      for (int i = 0; i < list.Count; i++) {
+        if (list[i]) {
+          rtb.Text += rgz.ForOptMdl.LabelsX[i] + " + ";
+        }
+      }
+      rtb.Text = rtb.Text.Substring(0, rtb.Text.Length - 3);
     }
     private void setDataToolStripMenuItem_Click(object sender, EventArgs e) {
       OpenFileDialog ofd = new OpenFileDialog();
@@ -135,11 +149,18 @@ namespace smad5 {
       Size s = new Size(w, h);
       for (int i = 1; i < rgz.ForOptMdl.LabelsX.Count; i++) {
         Panel pnl = new Panel();
-        
         pnl.Size = s;
+        pnl.Padding = new System.Windows.Forms.Padding(2);
+        pnl.MouseDown += pnl_MouseDown;
+        pnl.Name = (i - 1).ToString();
+        pnl.Tag = "non";
+
         PictureBox pbField = new PictureBox();
         pbField.Dock = DockStyle.Fill;
         pbField.Size = new System.Drawing.Size(w - lSize, h - lSize);
+        pbField.Name = (i - 1).ToString();
+        pbField.MouseDown += pbField_MouseDown;
+
         rgz.DrawCorellationField(pbField, i);
 
         pnl.Controls.Add(pbField);
@@ -152,6 +173,8 @@ namespace smad5 {
         lbl.ForeColor = Color.White;
         lbl.Size = new System.Drawing.Size(w, lSize);
         lbl.TextAlign = ContentAlignment.MiddleCenter;
+        lbl.Name = (i - 1).ToString();
+        lbl.MouseDown += lbl_MouseDown;
 
         Label lbl2 = new Label();
         lbl2.Text = "Y";
@@ -161,6 +184,8 @@ namespace smad5 {
         lbl2.ForeColor = Color.Red;
         lbl2.Size = new System.Drawing.Size(lSize, h);
         lbl2.TextAlign = ContentAlignment.MiddleCenter;
+        lbl2.Name = (i - 1).ToString();
+        lbl2.MouseDown += lbl_MouseDown;
 
         pnl.Controls.Add(lbl);
         pnl.Controls.Add(lbl2);
@@ -171,6 +196,30 @@ namespace smad5 {
 
       rtbLog.Text += "Correlation fields draw [OK]" + _ns;
     }
+
+    void lbl_MouseDown(object sender, MouseEventArgs e) {
+      int ind = Convert.ToInt32(((Label)sender).Name);
+      computePanel(ind);
+    }
+
+    void pbField_MouseDown(object sender, MouseEventArgs e) {
+      int ind = Convert.ToInt32(((PictureBox)sender).Name);
+      computePanel(ind);
+    }
+    void pnl_MouseDown(object sender, MouseEventArgs e) {
+      int ind = Convert.ToInt32(((Panel)sender).Name);
+      computePanel(ind);
+    }
+    private void computePanel(int ind) {
+      if (flpFields.Controls[ind].Tag.ToString() == "non") {
+        flpFields.Controls[ind].Tag = "sel";
+        flpFields.Controls[ind].BackColor = Color.HotPink;
+      }
+      else {
+        flpFields.Controls[ind].Tag = "non";
+        flpFields.Controls[ind].BackColor = Color.Gainsboro;
+      }
+    }
     private void btnCalc_Click(object sender, EventArgs e) {
       if (cmbOptimalModel.SelectedIndex == -1) {
         MessageBox.Show("Choose Optimal model algorithm!");
@@ -180,6 +229,8 @@ namespace smad5 {
         MessageBox.Show("Check data!");
         return;
       }
+
+      setFuncByFields();
 
       if (cmbOptimalModel.SelectedIndex == 0) doRgzFill(OptimalModelAlgorithm.Insertion);
       else doRgzFill(OptimalModelAlgorithm.Exception);
@@ -195,6 +246,13 @@ namespace smad5 {
 
       rgz.CheckAutoCorellation();
       fillAutoCorellation();
+
+      rgz.CheckAdequacy();
+      fillAdequacy();
+
+      rgz.GetMaxY();
+      fillLastWork();
+      drawE();
     }
     private void fillMultiCollinear() {
       rtbMC1.Text = rgz.ForMultCol.DetXTXTrace.ToString();
@@ -223,10 +281,27 @@ namespace smad5 {
     private void fillAutoCorellation() {
       rtbAutoCor.Text = "";
       rtbAutoCor.Text += "DW = " + rgz.ForAutoCor.DW.ToString() + _ns;
-      rtbAutoCor.Text += "dH_alpha = " + "????";//rgz.ForAutoCor.dHa.ToString() + _ns;
-
-      //if (rgz.ForAutoCor.DW < rgz.ForGeter.FDistr)
-       // rtbHeter.Text += _ns + "H of homo Not rejected";
+      rtbAutoCor.Text += "dU_0.05 = " + rgz.ForAutoCor.dUa.ToString() + _ns;
+      rtbAutoCor.Text += "dL_0.05 = " + rgz.ForAutoCor.dLa.ToString() + _ns;
+      rtbAutoCor.Text += _ns;
+      if (rgz.ForAutoCor.DW >= 4 - rgz.ForAutoCor.dLa) {
+        rtbAutoCor.Text += "H of autocorrelation Rejected." + _ns;
+        rtbAutoCor.Text += "Negative autocorrelation." + _ns;
+        return;
+      }
+      if (rgz.ForAutoCor.DW >= 4 - rgz.ForAutoCor.dUa) {
+        rtbAutoCor.Text += "Undefined autocorrelation." + _ns;
+        return;
+      }
+      if (rgz.ForAutoCor.DW >= rgz.ForAutoCor.dUa) {
+        rtbAutoCor.Text += "H of autocorrelation Not Rejected." + _ns;
+        return;
+      }
+      if (rgz.ForAutoCor.DW >= 0) {
+        rtbAutoCor.Text += "H of autocorrelation Rejected." + _ns;
+        rtbAutoCor.Text += "Positive autocorrelation." + _ns;
+        return;
+      }
     }
     private void fillFKrit() {
       rtbFKrit.Text = "";
@@ -258,6 +333,78 @@ namespace smad5 {
         rtbFKrit.Text += rgz.ForOptMdl.AEV[i].ToString() + _ns;
         rtbFKrit.Text += _ns;
 
+      }
+    }
+    private void setFuncByFields() {
+      rgz.TrueFunc.Clear();
+      rgz.TrueFunc.Add(true);
+
+      for (int i = 0; i < flpFields.Controls.Count; i++) {
+        if (flpFields.Controls[i].Tag.ToString() == "sel")
+          rgz.TrueFunc.Add(true);
+        else
+          rgz.TrueFunc.Add(false);
+      }
+    }
+    private void fillAdequacy() {
+      rtbAdeq.Text = "";
+      rtbAdeq.Text += "F = " + rgz.ForAdequat.SigmaDiv.ToString() + _ns;
+      rtbAdeq.Text += "F_0.05 = " + rgz.ForAdequat.FDist.ToString() + _ns;
+
+      if (rgz.ForAdequat.SigmaDiv < rgz.ForAdequat.FDist) {
+        rtbAdeq.Text += "Adequat model.";
+        return;
+      }
+      rtbAdeq.Text += "Non adequat model.";
+    }
+    private void fillLastWork() {
+      rtbCInter.Text = "";
+      rtbCInter.Text += "minB = " + rgz.ForAdequat.MinInt.ToString() + _ns;
+      rtbCInter.Text += "yMax = " + rgz.ForAdequat.Ymax.ToString() + _ns;
+      rtbCInter.Text += "maxB = " + rgz.ForAdequat.MaxInt.ToString() + _ns;
+
+    }
+    private void drawE() {
+      flpRssPbxs.Controls.Clear();
+      int w = 230; int h = 200; int lSize = 18;
+      Size s = new Size(w, h);
+
+      for (int i = 0; i < rgz.TrueFunc.Count; i++) {
+        if (!rgz.TrueFunc[i]) continue;
+
+        Panel pnl = new Panel();
+        pnl.Size = s;
+
+        PictureBox pbField = new PictureBox();
+        pbField.Dock = DockStyle.Fill;
+        pbField.Size = new System.Drawing.Size(w - lSize, h - lSize);
+
+        rgz.DrawE(pbField, i);
+
+        pnl.Controls.Add(pbField);
+
+        Label lbl = new Label();
+        lbl.Text = rgz.ForOptMdl.LabelsX[i];
+        lbl.AutoSize = false;
+        lbl.Dock = DockStyle.Bottom;
+        lbl.BackColor = Color.RoyalBlue;
+        lbl.ForeColor = Color.White;
+        lbl.Size = new System.Drawing.Size(w, lSize);
+        lbl.TextAlign = ContentAlignment.MiddleCenter;
+
+        Label lbl2 = new Label();
+        lbl2.Text = "E";
+        lbl2.AutoSize = false;
+        lbl2.Dock = DockStyle.Left;
+        lbl2.BackColor = Color.White;
+        lbl2.ForeColor = Color.Red;
+        lbl2.Size = new System.Drawing.Size(lSize, h);
+        lbl2.TextAlign = ContentAlignment.MiddleCenter;
+
+        pnl.Controls.Add(lbl);
+        pnl.Controls.Add(lbl2);
+
+        flpRssPbxs.Controls.Add(pnl);
       }
     }
   }
