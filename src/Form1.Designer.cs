@@ -33,10 +33,14 @@
       this.tabPage5 = new System.Windows.Forms.TabPage();
       this.flpFields = new System.Windows.Forms.FlowLayoutPanel();
       this.tabPage3 = new System.Windows.Forms.TabPage();
-      this.btnCalc = new System.Windows.Forms.Button();
+      this.label19 = new System.Windows.Forms.Label();
+      this.panel20 = new System.Windows.Forms.Panel();
+      this.lblModel = new System.Windows.Forms.Label();
+      this.label20 = new System.Windows.Forms.Label();
       this.panel7 = new System.Windows.Forms.Panel();
       this.cmbOptimalModel = new System.Windows.Forms.ComboBox();
       this.label7 = new System.Windows.Forms.Label();
+      this.btnCalc = new System.Windows.Forms.Button();
       this.tabPage6 = new System.Windows.Forms.TabPage();
       this.panel8 = new System.Windows.Forms.Panel();
       this.panel9 = new System.Windows.Forms.Panel();
@@ -108,6 +112,7 @@
       this.setDataToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
       this.logToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+      this.chbExmnAllOptFuncs = new System.Windows.Forms.CheckBox();
       this.panel2.SuspendLayout();
       ((System.ComponentModel.ISupportInitialize)(this.spcntMain)).BeginInit();
       this.spcntMain.Panel1.SuspendLayout();
@@ -118,6 +123,7 @@
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
       this.tabPage5.SuspendLayout();
       this.tabPage3.SuspendLayout();
+      this.panel20.SuspendLayout();
       this.panel7.SuspendLayout();
       this.tabPage6.SuspendLayout();
       this.panel8.SuspendLayout();
@@ -160,7 +166,7 @@
       this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel2.Location = new System.Drawing.Point(0, 0);
       this.panel2.Name = "panel2";
-      this.panel2.Size = new System.Drawing.Size(1208, 554);
+      this.panel2.Size = new System.Drawing.Size(1028, 554);
       this.panel2.TabIndex = 1;
       // 
       // spcntMain
@@ -178,7 +184,7 @@
       // 
       this.spcntMain.Panel2.Controls.Add(this.rtbLog);
       this.spcntMain.Panel2.Controls.Add(this.label1);
-      this.spcntMain.Size = new System.Drawing.Size(1208, 530);
+      this.spcntMain.Size = new System.Drawing.Size(1028, 530);
       this.spcntMain.SplitterDistance = 348;
       this.spcntMain.TabIndex = 9;
       // 
@@ -198,7 +204,7 @@
       this.tabControl1.Location = new System.Drawing.Point(0, 0);
       this.tabControl1.Name = "tabControl1";
       this.tabControl1.SelectedIndex = 0;
-      this.tabControl1.Size = new System.Drawing.Size(1208, 348);
+      this.tabControl1.Size = new System.Drawing.Size(1028, 348);
       this.tabControl1.TabIndex = 0;
       // 
       // tabPage1
@@ -210,7 +216,7 @@
       this.tabPage1.Location = new System.Drawing.Point(4, 22);
       this.tabPage1.Name = "tabPage1";
       this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage1.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage1.Size = new System.Drawing.Size(1020, 322);
       this.tabPage1.TabIndex = 0;
       this.tabPage1.Text = "Data";
       // 
@@ -250,7 +256,7 @@
       this.tabPage5.Controls.Add(this.flpFields);
       this.tabPage5.Location = new System.Drawing.Point(4, 22);
       this.tabPage5.Name = "tabPage5";
-      this.tabPage5.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage5.Size = new System.Drawing.Size(1020, 322);
       this.tabPage5.TabIndex = 4;
       this.tabPage5.Text = "Fields";
       this.tabPage5.UseVisualStyleBackColor = true;
@@ -262,39 +268,71 @@
       this.flpFields.Dock = System.Windows.Forms.DockStyle.Fill;
       this.flpFields.Location = new System.Drawing.Point(0, 0);
       this.flpFields.Name = "flpFields";
-      this.flpFields.Size = new System.Drawing.Size(1200, 322);
+      this.flpFields.Size = new System.Drawing.Size(1020, 322);
       this.flpFields.TabIndex = 0;
       // 
       // tabPage3
       // 
-      this.tabPage3.Controls.Add(this.btnCalc);
-      this.tabPage3.Controls.Add(this.panel7);
+      this.tabPage3.Controls.Add(this.label19);
+      this.tabPage3.Controls.Add(this.panel20);
       this.tabPage3.Location = new System.Drawing.Point(4, 22);
       this.tabPage3.Name = "tabPage3";
       this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage3.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage3.Size = new System.Drawing.Size(1020, 322);
       this.tabPage3.TabIndex = 2;
       this.tabPage3.Text = "Calculations";
       this.tabPage3.UseVisualStyleBackColor = true;
       // 
-      // btnCalc
+      // label19
       // 
-      this.btnCalc.Location = new System.Drawing.Point(43, 41);
-      this.btnCalc.Name = "btnCalc";
-      this.btnCalc.Size = new System.Drawing.Size(142, 23);
-      this.btnCalc.TabIndex = 1;
-      this.btnCalc.Text = "Calculate";
-      this.btnCalc.UseVisualStyleBackColor = true;
-      this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
+      this.label19.AutoSize = true;
+      this.label19.Location = new System.Drawing.Point(318, 22);
+      this.label19.Name = "label19";
+      this.label19.Size = new System.Drawing.Size(314, 13);
+      this.label19.TabIndex = 3;
+      this.label19.Text = "To choose appropriate model click on fields in previous tab Fields";
+      // 
+      // panel20
+      // 
+      this.panel20.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.panel20.Controls.Add(this.chbExmnAllOptFuncs);
+      this.panel20.Controls.Add(this.lblModel);
+      this.panel20.Controls.Add(this.label20);
+      this.panel20.Controls.Add(this.panel7);
+      this.panel20.Controls.Add(this.btnCalc);
+      this.panel20.Location = new System.Drawing.Point(6, 38);
+      this.panel20.Name = "panel20";
+      this.panel20.Size = new System.Drawing.Size(1006, 165);
+      this.panel20.TabIndex = 2;
+      // 
+      // lblModel
+      // 
+      this.lblModel.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.lblModel.AutoSize = true;
+      this.lblModel.Location = new System.Drawing.Point(304, 14);
+      this.lblModel.Name = "lblModel";
+      this.lblModel.Size = new System.Drawing.Size(0, 13);
+      this.lblModel.TabIndex = 4;
+      // 
+      // label20
+      // 
+      this.label20.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.label20.AutoSize = true;
+      this.label20.Location = new System.Drawing.Point(227, 14);
+      this.label20.Name = "label20";
+      this.label20.Size = new System.Drawing.Size(63, 13);
+      this.label20.TabIndex = 4;
+      this.label20.Text = "Your model:";
       // 
       // panel7
       // 
+      this.panel7.Anchor = System.Windows.Forms.AnchorStyles.Top;
       this.panel7.Controls.Add(this.cmbOptimalModel);
       this.panel7.Controls.Add(this.label7);
-      this.panel7.Location = new System.Drawing.Point(4, 3);
+      this.panel7.Location = new System.Drawing.Point(342, 102);
       this.panel7.Name = "panel7";
       this.panel7.Padding = new System.Windows.Forms.Padding(2);
-      this.panel7.Size = new System.Drawing.Size(232, 32);
+      this.panel7.Size = new System.Drawing.Size(298, 28);
       this.panel7.TabIndex = 0;
       // 
       // cmbOptimalModel
@@ -304,7 +342,7 @@
       this.cmbOptimalModel.Items.AddRange(new object[] {
             "Insertion",
             "Exception"});
-      this.cmbOptimalModel.Location = new System.Drawing.Point(105, 5);
+      this.cmbOptimalModel.Location = new System.Drawing.Point(171, 3);
       this.cmbOptimalModel.Name = "cmbOptimalModel";
       this.cmbOptimalModel.Size = new System.Drawing.Size(122, 21);
       this.cmbOptimalModel.TabIndex = 11;
@@ -315,17 +353,28 @@
       this.label7.Dock = System.Windows.Forms.DockStyle.Left;
       this.label7.Location = new System.Drawing.Point(2, 2);
       this.label7.Name = "label7";
-      this.label7.Size = new System.Drawing.Size(97, 28);
+      this.label7.Size = new System.Drawing.Size(163, 24);
       this.label7.TabIndex = 10;
       this.label7.Text = "Optimal model algorithm";
       this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+      // 
+      // btnCalc
+      // 
+      this.btnCalc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+      this.btnCalc.Location = new System.Drawing.Point(435, 132);
+      this.btnCalc.Name = "btnCalc";
+      this.btnCalc.Size = new System.Drawing.Size(142, 23);
+      this.btnCalc.TabIndex = 1;
+      this.btnCalc.Text = "Calculate";
+      this.btnCalc.UseVisualStyleBackColor = true;
+      this.btnCalc.Click += new System.EventHandler(this.btnCalc_Click);
       // 
       // tabPage6
       // 
       this.tabPage6.Controls.Add(this.panel8);
       this.tabPage6.Location = new System.Drawing.Point(4, 22);
       this.tabPage6.Name = "tabPage6";
-      this.tabPage6.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage6.Size = new System.Drawing.Size(1020, 322);
       this.tabPage6.TabIndex = 5;
       this.tabPage6.Text = "Multicollinearity";
       this.tabPage6.UseVisualStyleBackColor = true;
@@ -342,7 +391,7 @@
       this.panel8.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel8.Location = new System.Drawing.Point(0, 0);
       this.panel8.Name = "panel8";
-      this.panel8.Size = new System.Drawing.Size(1200, 322);
+      this.panel8.Size = new System.Drawing.Size(1020, 322);
       this.panel8.TabIndex = 6;
       // 
       // panel9
@@ -350,7 +399,7 @@
       this.panel9.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel9.Controls.Add(this.rtbMC1);
       this.panel9.Controls.Add(this.label8);
-      this.panel9.Location = new System.Drawing.Point(246, 3);
+      this.panel9.Location = new System.Drawing.Point(156, 3);
       this.panel9.Name = "panel9";
       this.panel9.Size = new System.Drawing.Size(140, 316);
       this.panel9.TabIndex = 0;
@@ -381,7 +430,7 @@
       this.panel10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel10.Controls.Add(this.rtbMC5);
       this.panel10.Controls.Add(this.label9);
-      this.panel10.Location = new System.Drawing.Point(810, 3);
+      this.panel10.Location = new System.Drawing.Point(720, 3);
       this.panel10.Name = "panel10";
       this.panel10.Size = new System.Drawing.Size(140, 316);
       this.panel10.TabIndex = 4;
@@ -412,7 +461,7 @@
       this.panel11.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel11.Controls.Add(this.rtbMC2);
       this.panel11.Controls.Add(this.label10);
-      this.panel11.Location = new System.Drawing.Point(387, 3);
+      this.panel11.Location = new System.Drawing.Point(297, 3);
       this.panel11.Name = "panel11";
       this.panel11.Size = new System.Drawing.Size(140, 316);
       this.panel11.TabIndex = 1;
@@ -443,7 +492,7 @@
       this.panel12.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel12.Controls.Add(this.rtbMC4);
       this.panel12.Controls.Add(this.label11);
-      this.panel12.Location = new System.Drawing.Point(669, 3);
+      this.panel12.Location = new System.Drawing.Point(579, 3);
       this.panel12.Name = "panel12";
       this.panel12.Size = new System.Drawing.Size(140, 316);
       this.panel12.TabIndex = 3;
@@ -474,7 +523,7 @@
       this.panel13.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel13.Controls.Add(this.rtbMC3);
       this.panel13.Controls.Add(this.label12);
-      this.panel13.Location = new System.Drawing.Point(528, 3);
+      this.panel13.Location = new System.Drawing.Point(438, 3);
       this.panel13.Name = "panel13";
       this.panel13.Size = new System.Drawing.Size(140, 316);
       this.panel13.TabIndex = 2;
@@ -506,7 +555,7 @@
       this.tabPage7.Controls.Add(this.panel14);
       this.tabPage7.Location = new System.Drawing.Point(4, 22);
       this.tabPage7.Name = "tabPage7";
-      this.tabPage7.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage7.Size = new System.Drawing.Size(1020, 322);
       this.tabPage7.TabIndex = 6;
       this.tabPage7.Text = "Heteroskedasticity";
       // 
@@ -515,9 +564,9 @@
       this.panel14.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel14.Controls.Add(this.rtbHeter);
       this.panel14.Controls.Add(this.label13);
-      this.panel14.Location = new System.Drawing.Point(505, 3);
+      this.panel14.Location = new System.Drawing.Point(158, 3);
       this.panel14.Name = "panel14";
-      this.panel14.Size = new System.Drawing.Size(179, 316);
+      this.panel14.Size = new System.Drawing.Size(725, 316);
       this.panel14.TabIndex = 3;
       // 
       // rtbHeter
@@ -526,7 +575,7 @@
       this.rtbHeter.Dock = System.Windows.Forms.DockStyle.Fill;
       this.rtbHeter.Location = new System.Drawing.Point(0, 34);
       this.rtbHeter.Name = "rtbHeter";
-      this.rtbHeter.Size = new System.Drawing.Size(179, 282);
+      this.rtbHeter.Size = new System.Drawing.Size(725, 282);
       this.rtbHeter.TabIndex = 10;
       this.rtbHeter.Text = "";
       // 
@@ -536,7 +585,7 @@
       this.label13.Dock = System.Windows.Forms.DockStyle.Top;
       this.label13.Location = new System.Drawing.Point(0, 0);
       this.label13.Name = "label13";
-      this.label13.Size = new System.Drawing.Size(179, 34);
+      this.label13.Size = new System.Drawing.Size(725, 34);
       this.label13.TabIndex = 11;
       this.label13.Text = "Heteroskedasticy";
       this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -547,7 +596,7 @@
       this.tabPage8.Controls.Add(this.panel15);
       this.tabPage8.Location = new System.Drawing.Point(4, 22);
       this.tabPage8.Name = "tabPage8";
-      this.tabPage8.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage8.Size = new System.Drawing.Size(1020, 322);
       this.tabPage8.TabIndex = 7;
       this.tabPage8.Text = "Autocorrelation";
       // 
@@ -556,9 +605,9 @@
       this.panel15.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel15.Controls.Add(this.rtbAutoCor);
       this.panel15.Controls.Add(this.label14);
-      this.panel15.Location = new System.Drawing.Point(511, 3);
+      this.panel15.Location = new System.Drawing.Point(181, 3);
       this.panel15.Name = "panel15";
-      this.panel15.Size = new System.Drawing.Size(179, 316);
+      this.panel15.Size = new System.Drawing.Size(711, 316);
       this.panel15.TabIndex = 4;
       // 
       // rtbAutoCor
@@ -567,7 +616,7 @@
       this.rtbAutoCor.Dock = System.Windows.Forms.DockStyle.Fill;
       this.rtbAutoCor.Location = new System.Drawing.Point(0, 34);
       this.rtbAutoCor.Name = "rtbAutoCor";
-      this.rtbAutoCor.Size = new System.Drawing.Size(179, 282);
+      this.rtbAutoCor.Size = new System.Drawing.Size(711, 282);
       this.rtbAutoCor.TabIndex = 10;
       this.rtbAutoCor.Text = "";
       // 
@@ -577,7 +626,7 @@
       this.label14.Dock = System.Windows.Forms.DockStyle.Top;
       this.label14.Location = new System.Drawing.Point(0, 0);
       this.label14.Name = "label14";
-      this.label14.Size = new System.Drawing.Size(179, 34);
+      this.label14.Size = new System.Drawing.Size(711, 34);
       this.label14.TabIndex = 11;
       this.label14.Text = "Autocorrelation";
       this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -588,7 +637,7 @@
       this.tabPage4.Controls.Add(this.panel16);
       this.tabPage4.Location = new System.Drawing.Point(4, 22);
       this.tabPage4.Name = "tabPage4";
-      this.tabPage4.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage4.Size = new System.Drawing.Size(1020, 322);
       this.tabPage4.TabIndex = 3;
       this.tabPage4.Text = "F-Krit";
       // 
@@ -597,7 +646,7 @@
       this.panel16.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel16.Controls.Add(this.rtbFKrit);
       this.panel16.Controls.Add(this.label15);
-      this.panel16.Location = new System.Drawing.Point(177, 3);
+      this.panel16.Location = new System.Drawing.Point(87, 3);
       this.panel16.Name = "panel16";
       this.panel16.Size = new System.Drawing.Size(844, 316);
       this.panel16.TabIndex = 5;
@@ -631,7 +680,7 @@
       this.tabPage2.Location = new System.Drawing.Point(4, 22);
       this.tabPage2.Name = "tabPage2";
       this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-      this.tabPage2.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage2.Size = new System.Drawing.Size(1020, 322);
       this.tabPage2.TabIndex = 1;
       this.tabPage2.Text = "Optimal model";
       this.tabPage2.UseVisualStyleBackColor = true;
@@ -649,7 +698,7 @@
       this.panel6.Dock = System.Windows.Forms.DockStyle.Fill;
       this.panel6.Location = new System.Drawing.Point(3, 3);
       this.panel6.Name = "panel6";
-      this.panel6.Size = new System.Drawing.Size(1194, 316);
+      this.panel6.Size = new System.Drawing.Size(1014, 316);
       this.panel6.TabIndex = 5;
       // 
       // pnlRSS
@@ -658,7 +707,7 @@
       this.pnlRSS.Controls.Add(this.rtbRSS);
       this.pnlRSS.Controls.Add(this.pbxRSS);
       this.pnlRSS.Controls.Add(this.label2);
-      this.pnlRSS.Location = new System.Drawing.Point(55, 3);
+      this.pnlRSS.Location = new System.Drawing.Point(-35, 3);
       this.pnlRSS.Name = "pnlRSS";
       this.pnlRSS.Size = new System.Drawing.Size(160, 310);
       this.pnlRSS.TabIndex = 0;
@@ -700,7 +749,7 @@
       this.panel17.Controls.Add(this.rtbE);
       this.panel17.Controls.Add(this.pbxE);
       this.panel17.Controls.Add(this.label16);
-      this.panel17.Location = new System.Drawing.Point(860, 3);
+      this.panel17.Location = new System.Drawing.Point(770, 3);
       this.panel17.Name = "panel17";
       this.panel17.Size = new System.Drawing.Size(160, 310);
       this.panel17.TabIndex = 4;
@@ -742,7 +791,7 @@
       this.panel5.Controls.Add(this.rtbAev);
       this.panel5.Controls.Add(this.pbxAev);
       this.panel5.Controls.Add(this.label6);
-      this.panel5.Location = new System.Drawing.Point(699, 3);
+      this.panel5.Location = new System.Drawing.Point(609, 3);
       this.panel5.Name = "panel5";
       this.panel5.Size = new System.Drawing.Size(160, 310);
       this.panel5.TabIndex = 4;
@@ -784,7 +833,7 @@
       this.panel1.Controls.Add(this.rtbMellous);
       this.panel1.Controls.Add(this.pbxMls);
       this.panel1.Controls.Add(this.label3);
-      this.panel1.Location = new System.Drawing.Point(216, 3);
+      this.panel1.Location = new System.Drawing.Point(126, 3);
       this.panel1.Name = "panel1";
       this.panel1.Size = new System.Drawing.Size(160, 310);
       this.panel1.TabIndex = 1;
@@ -826,7 +875,7 @@
       this.panel4.Controls.Add(this.rtbMsep);
       this.panel4.Controls.Add(this.pbxMsep);
       this.panel4.Controls.Add(this.label5);
-      this.panel4.Location = new System.Drawing.Point(538, 3);
+      this.panel4.Location = new System.Drawing.Point(448, 3);
       this.panel4.Name = "panel4";
       this.panel4.Size = new System.Drawing.Size(160, 310);
       this.panel4.TabIndex = 3;
@@ -868,7 +917,7 @@
       this.panel3.Controls.Add(this.rtbManyKrit);
       this.panel3.Controls.Add(this.pbxMnk);
       this.panel3.Controls.Add(this.label4);
-      this.panel3.Location = new System.Drawing.Point(377, 3);
+      this.panel3.Location = new System.Drawing.Point(287, 3);
       this.panel3.Name = "panel3";
       this.panel3.Size = new System.Drawing.Size(160, 310);
       this.panel3.TabIndex = 2;
@@ -910,7 +959,7 @@
       this.tabPage9.Controls.Add(this.panel18);
       this.tabPage9.Location = new System.Drawing.Point(4, 22);
       this.tabPage9.Name = "tabPage9";
-      this.tabPage9.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage9.Size = new System.Drawing.Size(1020, 322);
       this.tabPage9.TabIndex = 8;
       this.tabPage9.Text = "Adequacy";
       // 
@@ -919,9 +968,9 @@
       this.panel18.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)));
       this.panel18.Controls.Add(this.rtbAdeq);
       this.panel18.Controls.Add(this.label17);
-      this.panel18.Location = new System.Drawing.Point(511, 3);
+      this.panel18.Location = new System.Drawing.Point(113, 3);
       this.panel18.Name = "panel18";
-      this.panel18.Size = new System.Drawing.Size(179, 316);
+      this.panel18.Size = new System.Drawing.Size(795, 316);
       this.panel18.TabIndex = 5;
       // 
       // rtbAdeq
@@ -930,7 +979,7 @@
       this.rtbAdeq.Dock = System.Windows.Forms.DockStyle.Fill;
       this.rtbAdeq.Location = new System.Drawing.Point(0, 34);
       this.rtbAdeq.Name = "rtbAdeq";
-      this.rtbAdeq.Size = new System.Drawing.Size(179, 282);
+      this.rtbAdeq.Size = new System.Drawing.Size(795, 282);
       this.rtbAdeq.TabIndex = 10;
       this.rtbAdeq.Text = "";
       // 
@@ -940,7 +989,7 @@
       this.label17.Dock = System.Windows.Forms.DockStyle.Top;
       this.label17.Location = new System.Drawing.Point(0, 0);
       this.label17.Name = "label17";
-      this.label17.Size = new System.Drawing.Size(179, 34);
+      this.label17.Size = new System.Drawing.Size(795, 34);
       this.label17.TabIndex = 11;
       this.label17.Text = "Adequacy";
       this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -952,7 +1001,7 @@
       this.tabPage10.Controls.Add(this.panel19);
       this.tabPage10.Location = new System.Drawing.Point(4, 22);
       this.tabPage10.Name = "tabPage10";
-      this.tabPage10.Size = new System.Drawing.Size(1200, 322);
+      this.tabPage10.Size = new System.Drawing.Size(1020, 322);
       this.tabPage10.TabIndex = 9;
       this.tabPage10.Text = "lastWork";
       // 
@@ -960,9 +1009,9 @@
       // 
       this.flpRssPbxs.AutoScroll = true;
       this.flpRssPbxs.Dock = System.Windows.Forms.DockStyle.Fill;
-      this.flpRssPbxs.Location = new System.Drawing.Point(190, 0);
+      this.flpRssPbxs.Location = new System.Drawing.Point(249, 0);
       this.flpRssPbxs.Name = "flpRssPbxs";
-      this.flpRssPbxs.Size = new System.Drawing.Size(1010, 322);
+      this.flpRssPbxs.Size = new System.Drawing.Size(771, 322);
       this.flpRssPbxs.TabIndex = 7;
       // 
       // panel19
@@ -972,7 +1021,7 @@
       this.panel19.Dock = System.Windows.Forms.DockStyle.Left;
       this.panel19.Location = new System.Drawing.Point(0, 0);
       this.panel19.Name = "panel19";
-      this.panel19.Size = new System.Drawing.Size(190, 322);
+      this.panel19.Size = new System.Drawing.Size(249, 322);
       this.panel19.TabIndex = 6;
       // 
       // rtbCInter
@@ -981,7 +1030,7 @@
       this.rtbCInter.Dock = System.Windows.Forms.DockStyle.Fill;
       this.rtbCInter.Location = new System.Drawing.Point(0, 34);
       this.rtbCInter.Name = "rtbCInter";
-      this.rtbCInter.Size = new System.Drawing.Size(190, 288);
+      this.rtbCInter.Size = new System.Drawing.Size(249, 288);
       this.rtbCInter.TabIndex = 10;
       this.rtbCInter.Text = "";
       // 
@@ -991,7 +1040,7 @@
       this.label18.Dock = System.Windows.Forms.DockStyle.Top;
       this.label18.Location = new System.Drawing.Point(0, 0);
       this.label18.Name = "label18";
-      this.label18.Size = new System.Drawing.Size(190, 34);
+      this.label18.Size = new System.Drawing.Size(249, 34);
       this.label18.TabIndex = 11;
       this.label18.Text = "Confident interval";
       this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1002,7 +1051,7 @@
       this.rtbLog.Dock = System.Windows.Forms.DockStyle.Fill;
       this.rtbLog.Location = new System.Drawing.Point(0, 18);
       this.rtbLog.Name = "rtbLog";
-      this.rtbLog.Size = new System.Drawing.Size(1208, 160);
+      this.rtbLog.Size = new System.Drawing.Size(1028, 160);
       this.rtbLog.TabIndex = 8;
       this.rtbLog.Text = "";
       // 
@@ -1012,7 +1061,7 @@
       this.label1.Dock = System.Windows.Forms.DockStyle.Top;
       this.label1.Location = new System.Drawing.Point(0, 0);
       this.label1.Name = "label1";
-      this.label1.Size = new System.Drawing.Size(1208, 18);
+      this.label1.Size = new System.Drawing.Size(1028, 18);
       this.label1.TabIndex = 9;
       this.label1.Text = "Log";
       this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1024,7 +1073,7 @@
             this.viewToolStripMenuItem});
       this.menuStrip1.Location = new System.Drawing.Point(0, 0);
       this.menuStrip1.Name = "menuStrip1";
-      this.menuStrip1.Size = new System.Drawing.Size(1208, 24);
+      this.menuStrip1.Size = new System.Drawing.Size(1028, 24);
       this.menuStrip1.TabIndex = 7;
       this.menuStrip1.Text = "menuStrip1";
       // 
@@ -1060,11 +1109,21 @@
       this.logToolStripMenuItem.Text = "Log";
       this.logToolStripMenuItem.Click += new System.EventHandler(this.logToolStripMenuItem_Click);
       // 
+      // chbExmnAllOptFuncs
+      // 
+      this.chbExmnAllOptFuncs.AutoSize = true;
+      this.chbExmnAllOptFuncs.Location = new System.Drawing.Point(418, 79);
+      this.chbExmnAllOptFuncs.Name = "chbExmnAllOptFuncs";
+      this.chbExmnAllOptFuncs.Size = new System.Drawing.Size(161, 17);
+      this.chbExmnAllOptFuncs.TabIndex = 5;
+      this.chbExmnAllOptFuncs.Text = "Examine all optimal functions";
+      this.chbExmnAllOptFuncs.UseVisualStyleBackColor = true;
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(1208, 554);
+      this.ClientSize = new System.Drawing.Size(1028, 554);
       this.Controls.Add(this.panel2);
       this.MainMenuStrip = this.menuStrip1;
       this.Name = "Form1";
@@ -1081,6 +1140,9 @@
       ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
       this.tabPage5.ResumeLayout(false);
       this.tabPage3.ResumeLayout(false);
+      this.tabPage3.PerformLayout();
+      this.panel20.ResumeLayout(false);
+      this.panel20.PerformLayout();
       this.panel7.ResumeLayout(false);
       this.tabPage6.ResumeLayout(false);
       this.panel8.ResumeLayout(false);
@@ -1206,6 +1268,11 @@
     private System.Windows.Forms.RichTextBox rtbCInter;
     private System.Windows.Forms.Label label18;
     private System.Windows.Forms.FlowLayoutPanel flpRssPbxs;
+    private System.Windows.Forms.Label label19;
+    private System.Windows.Forms.Panel panel20;
+    private System.Windows.Forms.Label label20;
+    private System.Windows.Forms.Label lblModel;
+    private System.Windows.Forms.CheckBox chbExmnAllOptFuncs;
   }
 }
 

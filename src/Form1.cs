@@ -131,6 +131,8 @@ namespace smad5 {
             rtbLog.Text += "Data file " + ofd.FileName + " extract [OK]" + _ns;
 
             drawCorrelationFields(flpFields);
+            setFuncByFields();
+            fillModelLabel();
           }
         }
       }
@@ -196,12 +198,10 @@ namespace smad5 {
 
       rtbLog.Text += "Correlation fields draw [OK]" + _ns;
     }
-
     void lbl_MouseDown(object sender, MouseEventArgs e) {
       int ind = Convert.ToInt32(((Label)sender).Name);
       computePanel(ind);
     }
-
     void pbField_MouseDown(object sender, MouseEventArgs e) {
       int ind = Convert.ToInt32(((PictureBox)sender).Name);
       computePanel(ind);
@@ -219,6 +219,8 @@ namespace smad5 {
         flpFields.Controls[ind].Tag = "non";
         flpFields.Controls[ind].BackColor = Color.Gainsboro;
       }
+      setFuncByFields();
+      fillModelLabel();
     }
     private void btnCalc_Click(object sender, EventArgs e) {
       if (cmbOptimalModel.SelectedIndex == -1) {
@@ -238,31 +240,22 @@ namespace smad5 {
       rtbLog.ScrollToCaret();
       fillFKrit();
 
-      rgz.CheckMultiColliniar();
-      fillMultiCollinear();
+      computeRgzTests(rgz.TrueFunc);
+      drawE(rgz.TrueFunc);
 
-      rgz.CheckGeteroskedastic();
-      fillHeteroskedastic();
-
-      rgz.CheckAutoCorellation();
-      fillAutoCorellation();
-
-      rgz.CheckAdequacy();
-      fillAdequacy();
-
-      rgz.GetMaxY();
-      fillLastWork();
-      drawE();
+      if (chbExmnAllOptFuncs.Checked)
+        computeOptimalModels();
     }
-    private void fillMultiCollinear() {
-      rtbMC1.Text = rgz.ForMultCol.DetXTXTrace.ToString();
-      rtbMC2.Text = rgz.ForMultCol.MinLambda.ToString();
-      rtbMC3.Text = rgz.ForMultCol.NeimanGoldstein.ToString();
-      rtbMC4.Text = rgz.ForMultCol.MaxPairConjugation.ToString();
-      rtbMC5.Text = rgz.ForMultCol.MaxConjugation.ToString();
+    private void fillMultiCollinear(List<bool> func) {
+      rtbMC1.Text += funcToString(func) + _ns + rgz.ForMultCol.DetXTXTrace.ToString() + _ns + _ns;
+      rtbMC2.Text += funcToString(func) + _ns + rgz.ForMultCol.MinLambda.ToString() + _ns + _ns;
+      rtbMC3.Text += funcToString(func) + _ns + rgz.ForMultCol.NeimanGoldstein.ToString() + _ns + _ns;
+      rtbMC4.Text += funcToString(func) + _ns + rgz.ForMultCol.MaxPairConjugation.ToString() + _ns + _ns;
+      rtbMC5.Text += funcToString(func) + _ns + rgz.ForMultCol.MaxConjugation.ToString() + _ns + _ns;
     }
-    private void fillHeteroskedastic() {
-      rtbHeter.Text = "";
+    private void fillHeteroskedastic(List<bool> func) {
+      //rtbHeter.Text = "";
+      rtbHeter.Text += funcToString(func) + _ns;
       rtbHeter.Text += "alpha = " + rgz.ForGeter.alpha.ToString() + _ns;
       rtbHeter.Text += "ESS_2 = " + rgz.ForGeter.ESS.ToString() + _ns;
       rtbHeter.Text += "ESSChi = " + rgz.ForGeter.ESSChi.ToString() + _ns;
@@ -276,30 +269,32 @@ namespace smad5 {
       if (rgz.ForGeter.Rss2Rss1 < rgz.ForGeter.FDistr)
         rtbHeter.Text += _ns + "H of homo Not rejected";
       else rtbHeter.Text += _ns + "H of homo Rejected";
+      rtbHeter.Text += _ns + _ns;
 
     }
-    private void fillAutoCorellation() {
-      rtbAutoCor.Text = "";
+    private void fillAutoCorellation(List<bool> func) {
+      //rtbAutoCor.Text = "";
+      rtbAutoCor.Text += funcToString(func) + _ns;
       rtbAutoCor.Text += "DW = " + rgz.ForAutoCor.DW.ToString() + _ns;
       rtbAutoCor.Text += "dU_0.05 = " + rgz.ForAutoCor.dUa.ToString() + _ns;
       rtbAutoCor.Text += "dL_0.05 = " + rgz.ForAutoCor.dLa.ToString() + _ns;
       rtbAutoCor.Text += _ns;
       if (rgz.ForAutoCor.DW >= 4 - rgz.ForAutoCor.dLa) {
         rtbAutoCor.Text += "H of autocorrelation Rejected." + _ns;
-        rtbAutoCor.Text += "Negative autocorrelation." + _ns;
+        rtbAutoCor.Text += "Negative autocorrelation." + _ns + _ns;
         return;
       }
       if (rgz.ForAutoCor.DW >= 4 - rgz.ForAutoCor.dUa) {
-        rtbAutoCor.Text += "Undefined autocorrelation." + _ns;
+        rtbAutoCor.Text += "Undefined autocorrelation." + _ns + _ns;
         return;
       }
       if (rgz.ForAutoCor.DW >= rgz.ForAutoCor.dUa) {
-        rtbAutoCor.Text += "H of autocorrelation Not Rejected." + _ns;
+        rtbAutoCor.Text += "H of autocorrelation Not Rejected." + _ns + _ns;
         return;
       }
       if (rgz.ForAutoCor.DW >= 0) {
         rtbAutoCor.Text += "H of autocorrelation Rejected." + _ns;
-        rtbAutoCor.Text += "Positive autocorrelation." + _ns;
+        rtbAutoCor.Text += "Positive autocorrelation." + _ns + _ns;
         return;
       }
     }
@@ -346,31 +341,32 @@ namespace smad5 {
           rgz.TrueFunc.Add(false);
       }
     }
-    private void fillAdequacy() {
-      rtbAdeq.Text = "";
+    private void fillAdequacy(List<bool> func) {
+      rtbAdeq.Text += funcToString(func) + _ns;
+      //rtbAdeq.Text = "";
       rtbAdeq.Text += "F = " + rgz.ForAdequat.SigmaDiv.ToString() + _ns;
       rtbAdeq.Text += "F_0.05 = " + rgz.ForAdequat.FDist.ToString() + _ns;
 
       if (rgz.ForAdequat.SigmaDiv < rgz.ForAdequat.FDist) {
-        rtbAdeq.Text += "Adequat model.";
+        rtbAdeq.Text += "Adequat model." + _ns + _ns;
         return;
       }
-      rtbAdeq.Text += "Non adequat model.";
+      rtbAdeq.Text += "Non adequat model." + _ns + _ns;
     }
-    private void fillLastWork() {
-      rtbCInter.Text = "";
+    private void fillLastWork(List<bool> func) {
+      rtbCInter.Text += funcToString(func) + _ns;
       rtbCInter.Text += "minB = " + rgz.ForAdequat.MinInt.ToString() + _ns;
       rtbCInter.Text += "yMax = " + rgz.ForAdequat.Ymax.ToString() + _ns;
       rtbCInter.Text += "maxB = " + rgz.ForAdequat.MaxInt.ToString() + _ns;
-
+      rtbCInter.Text += _ns + _ns;
     }
-    private void drawE() {
+    private void drawE(List<bool> func) {
       flpRssPbxs.Controls.Clear();
       int w = 230; int h = 200; int lSize = 18;
       Size s = new Size(w, h);
 
-      for (int i = 0; i < rgz.TrueFunc.Count; i++) {
-        if (!rgz.TrueFunc[i]) continue;
+      for (int i = 0; i < func.Count; i++) {
+        if (!func[i]) continue;
 
         Panel pnl = new Panel();
         pnl.Size = s;
@@ -406,6 +402,64 @@ namespace smad5 {
 
         flpRssPbxs.Controls.Add(pnl);
       }
+    }
+    private void fillModelLabel() {
+      lblModel.Text = funcToString(rgz.TrueFunc);
+    }
+    private String funcToString(List<bool> func) {
+      var str = "";
+      if (!rgz.Initialized) return str;
+
+      for (int i = 0; i < func.Count; i++)
+        if (func[i])
+          str += rgz.ForOptMdl.LabelsX[i] + " + ";
+
+      if (str == "") return str;
+      str = str.Substring(0, str.Length - 3);
+      return str;
+    }
+    private void computeOptimalModels() {
+      if (!rgz.Initialized) return;
+
+      List<List<bool>> optModels = new List<List<bool>>();
+      optModels.Add(rgz.TrueFunc);
+      addFuncToList(ref optModels, rgz.ForOptMdl.BestFMell);
+      addFuncToList(ref optModels, rgz.ForOptMdl.BestFR);
+      addFuncToList(ref optModels, rgz.ForOptMdl.BestFAEV);
+      addFuncToList(ref optModels, rgz.ForOptMdl.BestFMSEP);
+      addFuncToList(ref optModels, rgz.ForOptMdl.BestFE);
+
+      for (int i = 1; i < optModels.Count; i++) {
+        computeRgzTests(optModels[i]);
+      }
+    }
+    private void addFuncToList(ref List<List<bool>> list, List<bool> func) {
+      for (int o = 0; o < list.Count; o++) {
+        bool findNEq = false;
+        for (int i = 0; i < func.Count; i++) {
+          if (list[o][i] != func[i]) { findNEq = true; break; }
+        }
+        if (!findNEq) return;
+      }
+      list.Add(func);
+    }
+    private void computeRgzTests(List<bool> func) {
+      rgz.TrueFunc = func;
+
+      rgz.CheckMultiColliniar();
+      fillMultiCollinear(func);
+
+      rgz.CheckGeteroskedastic();
+      fillHeteroskedastic(func);
+
+      rgz.CheckAutoCorellation();
+      fillAutoCorellation(func);
+
+      rgz.CheckAdequacy();
+      fillAdequacy(func);
+
+      rgz.GetMaxY();
+      fillLastWork(func);
     }
   }
 }
